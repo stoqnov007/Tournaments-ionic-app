@@ -1,0 +1,37 @@
+1. Tournaments
+2. Teams
+3. Favourite teams
+4. Games
+5. Standings
+
+Functionality:
+1. Quick Search Teams
+2. Add/remove favourite team
+3. Google map - display the game position on the map or navigate to this position.
+
+
+Pages(views):
+
+Home -> Tournaments -> Tournament (listed teams about this tournament) -> Single team -> (Standings OR Game) Game -> Google map view link + navigate button
+
+04.07.2018:
+
+1. Created gitLab repository and initial push.
+
+05.07.2018:
+
+1. Created local mongodb "tournaments":
+ - from cmd: mongo --shell
+ - db.tournaments.insert({title: "title 1", description: "description 1"})
+ - "show dbs"  - will show you all dbs with the new one
+ - "use tournaments", "db.tournaments.find()" - shows all data in the "tournaments" collection
+2. CRUD operations - create + read + delete tournaments
+
+06.07.2018:
+
+1. CRUD operations - update tournaments
+2. CRUD operations - create + read + delete + update teams
+3.Created local mongodb "teams"
+4. TODO: There is a bug - when go to home page from teams and click 
+  tournaments, the page loads teams again, instead loading the tournaments.
+5.
