@@ -6,6 +6,13 @@ var morgan = require('morgan');             // log requests to the console (expr
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var cors = require('cors');
+
+var AuthenticationController = require('./config/authentication'), 
+    passportService = require('./config/passport'),
+    passport = require('passport');
+ 
+var requireAuth = passport.authenticate('jwt', {session: false}),
+    requireLogin = passport.authenticate('local', {session: false});
  
 // Configuration
 mongoose.connect('mongodb://localhost/tournaments', { useMongoClient: true });
@@ -34,6 +41,15 @@ var Tournament = mongoose.model('tournaments', {
 });
  
 // Routes
+
+    // Auth Routes
+    
+    app.post('/api/register', AuthenticationController.register);
+    app.post('/api/login', requireLogin, AuthenticationController.login);
+
+    app.get('/api/protected', requireAuth, function(req, res){
+        res.send({ content: 'Success'});
+    });
  
     // Get tournaments
     app.get('/api/tournaments', function(req, res) {

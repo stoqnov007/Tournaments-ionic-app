@@ -1,3 +1,11 @@
+This Ionic 2 application works with the following:
+1. Ionic 2 starter from TournamentsApp-with-ionic2: https://github.com/agnimitradas/TournamentsApp-with-ionic2
+2. Additional Node.js application for back-end to handle the following: 
+   - Local database MongoDb with collections: "tournaments", "teams", "users" ...
+   - User authentication (role based) with passport - local strategy + JWT(JSON Web Tokens) - register and login user
+   - CRUD operations with Node.js, MongoDb and Mongoose API
+ 
+
 1. Tournaments
 2. Teams
 3. Favourite teams
@@ -8,6 +16,10 @@ Functionality:
 1. Quick Search Teams
 2. Add/remove favourite team
 3. Google map - display the game position on the map or navigate to this position.
+New:
+4. CRUD operations with MongoDb and Node.js 
+5. User authentication (role based) with passport - local strategy + JWT(JSON Web Tokens) - register and login user
+
 
 
 Pages(views):
@@ -25,7 +37,7 @@ Home -> Tournaments -> Tournament (listed teams about this tournament) -> Single
  - db.tournaments.insert({title: "title 1", description: "description 1"})
  - "show dbs"  - will show you all dbs with the new one
  - "use tournaments", "db.tournaments.find()" - shows all data in the "tournaments" collection
-2. CRUD operations - create + read + delete tournaments
+2. CRUD operations - create + read + delete tournaments - tutorial: https://www.joshmorony.com/building-a-review-app-with-ionic-2-mongodb-node/
 
 06.07.2018:
 
@@ -34,4 +46,11 @@ Home -> Tournaments -> Tournament (listed teams about this tournament) -> Single
 3.Created local mongodb "teams"
 4. TODO: There is a bug - when go to home page from teams and click 
   tournaments, the page loads teams again, instead loading the tournaments.
-5.
+
+08.07.2018:
+
+1. Created local mongodb "users"
+2. User authentication (role based) with passport - local strategy + JWT(JSON Web Tokens) - tutorial : https://www.joshmorony.com/creating-role-based-authentication-with-passport-in-ionic-2-part-1/
+3. Register user with email and password (register page)
+4. Login user (login page)
+4. TODO: Logout and admin menu

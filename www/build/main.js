@@ -6,8 +6,8 @@ webpackJsonp([0],{
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dbservice; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(422);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -140,7 +140,158 @@ var Dbservice = (function () {
 
 /***/ }),
 
-/***/ 292:
+/***/ 257:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Auth; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var Auth = (function () {
+    function Auth(http, storage) {
+        this.http = http;
+        this.storage = storage;
+    }
+    Auth.prototype.checkAuthentication = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            //Load token if exists
+            _this.storage.get('token').then(function (value) {
+                _this.token = value;
+                var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+                headers.append('Authorization', _this.token);
+                _this.http.get('http://localhost:8080/api/protected', { headers: headers })
+                    .subscribe(function (res) {
+                    resolve(res);
+                }, function (err) {
+                    reject(err);
+                });
+            });
+        });
+    };
+    Auth.prototype.createAccount = function (details) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+            headers.append('Content-Type', 'application/json');
+            _this.http.post('http://localhost:8080/api/register', JSON.stringify(details), { headers: headers })
+                .subscribe(function (res) {
+                var data = res.json();
+                _this.token = data.token;
+                _this.storage.set('token', data.token);
+                resolve(data);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    Auth.prototype.login = function (credentials) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+            headers.append('Content-Type', 'application/json');
+            _this.http.post('http://localhost:8080/api/login', JSON.stringify(credentials), { headers: headers })
+                .subscribe(function (res) {
+                var data = res.json();
+                _this.token = data.token;
+                _this.storage.set('token', data.token);
+                resolve(data);
+                resolve(res.json());
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    Auth.prototype.logout = function () {
+        this.storage.set('token', '');
+    };
+    Auth = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
+        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]) === 'function' && _b) || Object])
+    ], Auth);
+    return Auth;
+    var _a, _b;
+}());
+//# sourceMappingURL=auth.js.map
+
+/***/ }),
+
+/***/ 258:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyTeamPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_exports__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__ = __webpack_require__(62);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var MyTeamPage = (function () {
+    function MyTeamPage(_nav, _tournamentService, _loadingController, _favouriteTournamentService) {
+        this._nav = _nav;
+        this._tournamentService = _tournamentService;
+        this._loadingController = _loadingController;
+        this._favouriteTournamentService = _favouriteTournamentService;
+    }
+    // ionViewDidLoad(){
+    // }            
+    MyTeamPage.prototype.ionViewDidLoad = function () {
+        this.favTeams = this._favouriteTournamentService.getTheFavourites();
+    };
+    MyTeamPage.prototype.goToTournaments = function () {
+        this._nav.push(__WEBPACK_IMPORTED_MODULE_2__pages_exports__["h" /* TournamentPage */]);
+    };
+    MyTeamPage.prototype.favTeamTapped = function (favTeam) {
+        var _this = this;
+        var loader = this._loadingController.create({
+            content: "Loading..."
+        });
+        loader.present().then(function () {
+            _this._tournamentService.getCurrentTournamentData(favTeam.tournamentId)
+                .subscribe(function (data) { return _this._nav.push(__WEBPACK_IMPORTED_MODULE_2__pages_exports__["f" /* TeamHomePage */], favTeam.team); });
+            loader.dismiss();
+        });
+    };
+    MyTeamPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\myTeams\my-teams.page.html"*/'<ion-header>\n    <ion-navbar color="danger">\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>My Teams</ion-title>\n    </ion-navbar>\n</ion-header>\n<ion-content center text-center>\n\n    <ion-card *ngIf="!favTeams">\n        <img src="http://sites.wrk.ru/sites/uk/co/co/tiscali/myweb/theblackhole/allpages/j-smile_wow/lgeoops.jpg">\n        <ion-card-content>\n            <h1 text-uppercase> No Teams for now to Display</h1>\n        </ion-card-content>\n        <!--<ion-note>\n            11h ago\n        </ion-note>-->\n    </ion-card>\n\n    <ion-card *ngIf="favTeams">\n        <ion-card-content>\n            <ion-list>\n                <ion-list-header>\n                    <h2>My Favourite Teams</h2>\n                </ion-list-header>\n                <button ion-item *ngFor="let favTeam of favTeams" (click)="favTeamTapped(favTeam)">\n                    <ion-icon name="star"></ion-icon>  {{favTeam.team.name}}\n                    <p>{{favTeam.tournamentName}}</p>\n                </button>\n            </ion-list>\n        </ion-card-content>\n        <ion-note right>\n            Tap individuals to get more info\n        </ion-note>\n    </ion-card>\n\n    <div padding>\n        <h6>To Find more news and details about teams and Tournaments</h6>\n    </div>\n    <div class="col text-center">\n        <button full center ion-button round (click)="goToTournaments()"><ion-icon name="search"></ion-icon>Find a Tournament</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\myTeams\my-teams.page.html"*/
+        }), 
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["b" /* TournamentService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["a" /* FavouriteTournamentService */]])
+    ], MyTeamPage);
+    return MyTeamPage;
+}());
+//# sourceMappingURL=my-teams.page.js.map
+
+/***/ }),
+
+/***/ 295:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -153,17 +304,17 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 292;
+webpackEmptyAsyncContext.id = 295;
 
 /***/ }),
 
-/***/ 344:
+/***/ 347:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddTournamentPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -208,13 +359,13 @@ var AddTournamentPage = (function () {
 
 /***/ }),
 
-/***/ 420:
+/***/ 423:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddTeamsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -259,15 +410,15 @@ var AddTeamsPage = (function () {
 
 /***/ }),
 
-/***/ 421:
+/***/ 424:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TournamentDemo; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_shared_db_service__ = __webpack_require__(254);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_add_tournament_page__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_add_tournament_page__ = __webpack_require__(347);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -374,15 +525,15 @@ var TournamentDemo = (function () {
 
 /***/ }),
 
-/***/ 423:
+/***/ 425:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsDemo; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_shared_db_service__ = __webpack_require__(254);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_add_teams_page__ = __webpack_require__(420);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_add_teams_page__ = __webpack_require__(423);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -474,13 +625,93 @@ var TeamsDemo = (function () {
 
 /***/ }),
 
-/***/ 429:
+/***/ 426:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__signup_signup_page__ = __webpack_require__(454);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+var LoginPage = (function () {
+    function LoginPage(navCtrl, authService, loadingCtrl) {
+        this.navCtrl = navCtrl;
+        this.authService = authService;
+        this.loadingCtrl = loadingCtrl;
+    }
+    LoginPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        this.showLoader();
+        //Check if already authenticated
+        this.authService.checkAuthentication().then(function (res) {
+            console.log("Already authorized");
+            _this.loading.dismiss();
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__["a" /* MyTeamPage */]);
+        }, function (err) {
+            console.log("Not already authorized");
+            _this.loading.dismiss();
+        });
+    };
+    LoginPage.prototype.login = function () {
+        var _this = this;
+        this.showLoader();
+        var credentials = {
+            email: this.email,
+            password: this.password
+        };
+        this.authService.login(credentials).then(function (result) {
+            _this.loading.dismiss();
+            console.log(result);
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__["a" /* MyTeamPage */]);
+        }, function (err) {
+            _this.loading.dismiss();
+            console.log(err);
+        });
+    };
+    LoginPage.prototype.launchSignup = function () {
+        this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_4__signup_signup_page__["a" /* SignupPage */]);
+    };
+    LoginPage.prototype.showLoader = function () {
+        this.loading = this.loadingCtrl.create({
+            content: 'Authenticating...'
+        });
+        this.loading.present();
+    };
+    LoginPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'login.page',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\login\login.page.html"*/'<ion-header>\n\n        <ion-navbar color="secondary">\n\n            <ion-title>Shared Todos</ion-title>\n\n        </ion-navbar>\n\n    </ion-header>\n\n     \n\n    <ion-content>\n\n     \n\n        <ion-row class="login-form">\n\n            <ion-col>\n\n                <ion-list inset>\n\n     \n\n                  <ion-item>\n\n                    <ion-label><ion-icon name="person"></ion-icon></ion-label>\n\n                    <ion-input [(ngModel)]="email" placeholder="email" type="text"></ion-input>\n\n                  </ion-item>\n\n     \n\n                  <ion-item>\n\n                    <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n\n                    <ion-input [(ngModel)]="password" placeholder="password" type="password"></ion-input>\n\n                  </ion-item>\n\n     \n\n                </ion-list>\n\n     \n\n                <button ion-button full (click)="login()" color="primary" class="login-button">Login</button>\n\n     \n\n            </ion-col>\n\n        </ion-row>\n\n     \n\n        <ion-row>\n\n            <ion-col>\n\n                <button ion-button (click)="launchSignup()" class="create-account">Create an Account</button>\n\n            </ion-col>\n\n        </ion-row>\n\n     \n\n    </ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\login\login.page.html"*/
+        }), 
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
+    ], LoginPage);
+    return LoginPage;
+}());
+//# sourceMappingURL=login.page.js.map
+
+/***/ }),
+
+/***/ 428:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Game; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_exports__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__ = __webpack_require__(62);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -524,40 +755,15 @@ var Game = (function () {
 
 /***/ }),
 
-/***/ 459:
+/***/ 454:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(460);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(556);
-
-
-Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
-//# sourceMappingURL=main.js.map
-
-/***/ }),
-
-/***/ 556:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_add_add_tournament_page__ = __webpack_require__(344);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_add_add_teams_page__ = __webpack_require__(420);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_tournamentsDemo_tournaments_demo__ = __webpack_require__(421);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_teamsDemo_teams_demo__ = __webpack_require__(423);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__shared_db_service__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__angular_http__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ionic_angular__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_component__ = __webpack_require__(594);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__ = __webpack_require__(424);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__ = __webpack_require__(428);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_google_maps_core__ = __webpack_require__(878);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11_angular2_google_maps_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11_angular2_google_maps_core__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__shared_shared_pages__ = __webpack_require__(62);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__ = __webpack_require__(258);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -567,6 +773,103 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
+
+
+var SignupPage = (function () {
+    function SignupPage(navCtrl, authService, loadingCtrl) {
+        this.navCtrl = navCtrl;
+        this.authService = authService;
+        this.loadingCtrl = loadingCtrl;
+    }
+    SignupPage.prototype.register = function () {
+        var _this = this;
+        this.showLoader();
+        var details = {
+            email: this.email,
+            password: this.password,
+            role: this.role
+        };
+        this.authService.createAccount(details).then(function (result) {
+            _this.loading.dismiss();
+            console.log(result);
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__["a" /* MyTeamPage */]);
+        }, function (err) {
+            _this.loading.dismiss();
+        });
+    };
+    SignupPage.prototype.showLoader = function () {
+        this.loading = this.loadingCtrl.create({
+            content: 'Authenticating...'
+        });
+        this.loading.present();
+    };
+    SignupPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+            selector: 'signup.page',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\signup\signup.page.html"*/'<ion-header>\n\n \n\n        <ion-navbar color="secondary">\n\n          <ion-title>Create Account</ion-title>\n\n        </ion-navbar>\n\n       \n\n      </ion-header>\n\n       \n\n       \n\n      <ion-content padding>\n\n       \n\n          <ion-row class="account-form">\n\n              <ion-col>\n\n                  <ion-list inset>\n\n       \n\n                      <ion-item>\n\n                          <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n\n                          <ion-input [(ngModel)]="email" placeholder="Email" type="email"></ion-input>\n\n                      </ion-item>\n\n       \n\n                      <ion-item>\n\n                          <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n\n                          <ion-input [(ngModel)]="password" placeholder="Password" type="password"></ion-input>\n\n                      </ion-item>\n\n       \n\n                      <ion-item>\n\n                          <ion-label>Role</ion-label>\n\n                          <ion-select [(ngModel)]="role">\n\n                              <ion-option value="reader">Reader</ion-option>\n\n                              <ion-option value="creator">Creator</ion-option>\n\n                              <ion-option value="editor">Editor</ion-option>\n\n                          </ion-select>\n\n                      </ion-item>\n\n       \n\n                  </ion-list>\n\n       \n\n                  <button ion-button (click)="register()" class="continue-button">Register</button>\n\n       \n\n              </ion-col>\n\n          </ion-row>\n\n       \n\n      </ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\signup\signup.page.html"*/
+        }), 
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
+    ], SignupPage);
+    return SignupPage;
+}());
+//# sourceMappingURL=signup.page.js.map
+
+/***/ }),
+
+/***/ 464:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(465);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(561);
+
+
+Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
+//# sourceMappingURL=main.js.map
+
+/***/ }),
+
+/***/ 561:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_add_add_tournament_page__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_add_add_teams_page__ = __webpack_require__(423);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_tournamentsDemo_tournaments_demo__ = __webpack_require__(424);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_teamsDemo_teams_demo__ = __webpack_require__(425);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login_page__ = __webpack_require__(426);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_signup_signup_page__ = __webpack_require__(454);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_db_service__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_platform_browser__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_http__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ionic_angular__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_component__ = __webpack_require__(882);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_storage__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_status_bar__ = __webpack_require__(455);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_splash_screen__ = __webpack_require__(458);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angular2_google_maps_core__ = __webpack_require__(885);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angular2_google_maps_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_angular2_google_maps_core__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__shared_shared_pages__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__shared_auth__ = __webpack_require__(257);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
 
 
 
@@ -585,52 +888,60 @@ var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_5__angular_core__["NgModule"])({
+        Object(__WEBPACK_IMPORTED_MODULE_7__angular_core__["NgModule"])({
             declarations: [
-                __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["c" /* MyTeamPage */],
+                __WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["c" /* MyTeamPage */],
                 __WEBPACK_IMPORTED_MODULE_0__pages_add_add_tournament_page__["a" /* AddTournamentPage */],
                 __WEBPACK_IMPORTED_MODULE_1__pages_add_add_teams_page__["a" /* AddTeamsPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["h" /* TournamentPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["h" /* TournamentPage */],
                 __WEBPACK_IMPORTED_MODULE_2__pages_tournamentsDemo_tournaments_demo__["a" /* TournamentDemo */],
                 __WEBPACK_IMPORTED_MODULE_3__pages_teamsDemo_teams_demo__["a" /* TeamsDemo */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["g" /* TeamsPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["e" /* TeamDetailsPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["a" /* Game */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["d" /* StandingPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["f" /* TeamHomePage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["b" /* MapPage */]
+                __WEBPACK_IMPORTED_MODULE_4__pages_login_login_page__["a" /* LoginPage */],
+                __WEBPACK_IMPORTED_MODULE_5__pages_signup_signup_page__["a" /* SignupPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["g" /* TeamsPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["e" /* TeamDetailsPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["a" /* Game */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["d" /* StandingPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["f" /* TeamHomePage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["b" /* MapPage */]
             ],
             imports: [
-                __WEBPACK_IMPORTED_MODULE_7_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* MyApp */], {}, {
+                __WEBPACK_IMPORTED_MODULE_8__angular_platform_browser__["a" /* BrowserModule */],
+                __WEBPACK_IMPORTED_MODULE_10_ionic_angular__["c" /* IonicModule */].forRoot(__WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* MyApp */], {}, {
                     links: []
                 }),
-                __WEBPACK_IMPORTED_MODULE_11_angular2_google_maps_core__["AgmCoreModule"].forRoot({ apiKey: 'AIzaSyBbsOlMryAHu2ESwHHSwrDBIUU7fiENNoM' })
+                __WEBPACK_IMPORTED_MODULE_15_angular2_google_maps_core__["AgmCoreModule"].forRoot({ apiKey: 'AIzaSyBbsOlMryAHu2ESwHHSwrDBIUU7fiENNoM' }),
+                __WEBPACK_IMPORTED_MODULE_12__ionic_storage__["a" /* IonicStorageModule */].forRoot(),
+                __WEBPACK_IMPORTED_MODULE_9__angular_http__["c" /* HttpModule */]
             ],
-            bootstrap: [__WEBPACK_IMPORTED_MODULE_7_ionic_angular__["a" /* IonicApp */]],
+            bootstrap: [__WEBPACK_IMPORTED_MODULE_10_ionic_angular__["a" /* IonicApp */]],
             entryComponents: [
-                __WEBPACK_IMPORTED_MODULE_8__app_component__["a" /* MyApp */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["c" /* MyTeamPage */],
+                __WEBPACK_IMPORTED_MODULE_11__app_component__["a" /* MyApp */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["c" /* MyTeamPage */],
                 __WEBPACK_IMPORTED_MODULE_0__pages_add_add_tournament_page__["a" /* AddTournamentPage */],
                 __WEBPACK_IMPORTED_MODULE_1__pages_add_add_teams_page__["a" /* AddTeamsPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["h" /* TournamentPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["h" /* TournamentPage */],
                 __WEBPACK_IMPORTED_MODULE_2__pages_tournamentsDemo_tournaments_demo__["a" /* TournamentDemo */],
                 __WEBPACK_IMPORTED_MODULE_3__pages_teamsDemo_teams_demo__["a" /* TeamsDemo */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["g" /* TeamsPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["e" /* TeamDetailsPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["a" /* Game */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["d" /* StandingPage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["f" /* TeamHomePage */],
-                __WEBPACK_IMPORTED_MODULE_12__pages_pages_exports__["b" /* MapPage */]
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["g" /* TeamsPage */],
+                __WEBPACK_IMPORTED_MODULE_4__pages_login_login_page__["a" /* LoginPage */],
+                __WEBPACK_IMPORTED_MODULE_5__pages_signup_signup_page__["a" /* SignupPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["e" /* TeamDetailsPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["a" /* Game */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["d" /* StandingPage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["f" /* TeamHomePage */],
+                __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__["b" /* MapPage */]
             ],
             providers: [
-                __WEBPACK_IMPORTED_MODULE_9__ionic_native_status_bar__["a" /* StatusBar */],
-                __WEBPACK_IMPORTED_MODULE_10__ionic_native_splash_screen__["a" /* SplashScreen */],
-                __WEBPACK_IMPORTED_MODULE_13__shared_shared_pages__["b" /* TournamentService */],
-                __WEBPACK_IMPORTED_MODULE_6__angular_http__["c" /* HttpModule */],
-                __WEBPACK_IMPORTED_MODULE_13__shared_shared_pages__["a" /* FavouriteTournamentService */],
-                __WEBPACK_IMPORTED_MODULE_4__shared_db_service__["a" /* Dbservice */],
-                { provide: __WEBPACK_IMPORTED_MODULE_5__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_7_ionic_angular__["b" /* IonicErrorHandler */] }
+                __WEBPACK_IMPORTED_MODULE_13__ionic_native_status_bar__["a" /* StatusBar */],
+                __WEBPACK_IMPORTED_MODULE_14__ionic_native_splash_screen__["a" /* SplashScreen */],
+                __WEBPACK_IMPORTED_MODULE_17__shared_shared_pages__["b" /* TournamentService */],
+                __WEBPACK_IMPORTED_MODULE_9__angular_http__["c" /* HttpModule */],
+                __WEBPACK_IMPORTED_MODULE_17__shared_shared_pages__["a" /* FavouriteTournamentService */],
+                __WEBPACK_IMPORTED_MODULE_18__shared_auth__["a" /* Auth */],
+                __WEBPACK_IMPORTED_MODULE_6__shared_db_service__["a" /* Dbservice */],
+                { provide: __WEBPACK_IMPORTED_MODULE_7__angular_core__["ErrorHandler"], useClass: __WEBPACK_IMPORTED_MODULE_10_ionic_angular__["b" /* IonicErrorHandler */] }
             ]
         }), 
         __metadata('design:paramtypes', [])
@@ -641,86 +952,14 @@ var AppModule = (function () {
 
 /***/ }),
 
-/***/ 594:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(424);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(428);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_pages_exports__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_teamsDemo_teams_demo__ = __webpack_require__(423);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_tournamentsDemo_tournaments_demo__ = __webpack_require__(421);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-var MyApp = (function () {
-    function MyApp(platform, statusBar, splashScreen) {
-        this.platform = platform;
-        this.statusBar = statusBar;
-        this.splashScreen = splashScreen;
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_pages_exports__["c" /* MyTeamPage */];
-        this.initializeApp();
-    }
-    MyApp.prototype.initializeApp = function () {
-        var _this = this;
-        this.platform.ready().then(function () {
-            // Okay, so the platform is ready and our plugins are available.
-            // Here you can do any higher level native things you might need.
-            _this.statusBar.styleDefault();
-            _this.splashScreen.hide();
-        });
-    };
-    MyApp.prototype.goHome = function () {
-        this.nav.popToRoot;
-    };
-    MyApp.prototype.goToTournaments = function () {
-        this.nav.push(__WEBPACK_IMPORTED_MODULE_4__pages_pages_exports__["h" /* TournamentPage */]);
-    };
-    MyApp.prototype.goToDemoTournaments = function () {
-        this.nav.push(__WEBPACK_IMPORTED_MODULE_6__pages_tournamentsDemo_tournaments_demo__["a" /* TournamentDemo */]);
-    };
-    MyApp.prototype.goToDemoTeams = function () {
-        this.nav.push(__WEBPACK_IMPORTED_MODULE_5__pages_teamsDemo_teams_demo__["a" /* TeamsDemo */]);
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */]), 
-        __metadata('design:type', __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */])
-    ], MyApp.prototype, "nav", void 0);
-    MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\app\app.html"*/'<ion-menu [content]="content">\n    <ion-header color="danger">\n        <ion-toolbar>\n            <ion-title>Elite Schedule</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <ion-list-header>Navigate</ion-list-header>\n            <button menuClose ion-item (click)="goHome()">Home</button>\n            <button menuClose ion-item (click)="goToDemoTournaments()">Demo Tournaments</button>\n            <button menuClose ion-item (click)="goToDemoTeams()">Demo Teams</button>\n            <button menuClose ion-item (click)="goToTournaments()">Find a Tournament</button>\n        </ion-list>\n    </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\app\app.html"*/
-        }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
-    ], MyApp);
-    return MyApp;
-}());
-//# sourceMappingURL=app.component.js.map
-
-/***/ }),
-
-/***/ 599:
+/***/ 602:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TournamentService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(151);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__(600);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs__ = __webpack_require__(603);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -773,9 +1012,9 @@ var TournamentService = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tournament_api_service__ = __webpack_require__(599);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__tournament_api_service__ = __webpack_require__(602);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_0__tournament_api_service__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__favourite_teams_service__ = __webpack_require__(870);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__favourite_teams_service__ = __webpack_require__(875);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_1__favourite_teams_service__["a"]; });
 
 
@@ -787,21 +1026,21 @@ var TournamentService = (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game_game_page__ = __webpack_require__(429);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game_game_page__ = __webpack_require__(428);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__game_game_page__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__myTeams_my_teams_page__ = __webpack_require__(871);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__myTeams_my_teams_page__ = __webpack_require__(258);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_1__myTeams_my_teams_page__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__teamDetail_team_detail_page__ = __webpack_require__(872);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__teamDetail_team_detail_page__ = __webpack_require__(876);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_2__teamDetail_team_detail_page__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__teams_teams_page__ = __webpack_require__(873);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__teams_teams_page__ = __webpack_require__(877);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "g", function() { return __WEBPACK_IMPORTED_MODULE_3__teams_teams_page__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tournament_tournament__ = __webpack_require__(874);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__tournament_tournament__ = __webpack_require__(878);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_4__tournament_tournament__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Standings_standing_page__ = __webpack_require__(875);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__Standings_standing_page__ = __webpack_require__(879);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "d", function() { return __WEBPACK_IMPORTED_MODULE_5__Standings_standing_page__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__TeamHome_team_home_page__ = __webpack_require__(876);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__TeamHome_team_home_page__ = __webpack_require__(880);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "f", function() { return __WEBPACK_IMPORTED_MODULE_6__TeamHome_team_home_page__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__map_map_page__ = __webpack_require__(877);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__map_map_page__ = __webpack_require__(881);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "b", function() { return __WEBPACK_IMPORTED_MODULE_7__map_map_page__["a"]; });
 
 
@@ -815,7 +1054,7 @@ var TournamentService = (function () {
 
 /***/ }),
 
-/***/ 870:
+/***/ 875:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -888,74 +1127,15 @@ var FavouriteTournamentService = (function () {
 
 /***/ }),
 
-/***/ 871:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyTeamPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_exports__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__ = __webpack_require__(62);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var MyTeamPage = (function () {
-    function MyTeamPage(_nav, _tournamentService, _loadingController, _favouriteTournamentService) {
-        this._nav = _nav;
-        this._tournamentService = _tournamentService;
-        this._loadingController = _loadingController;
-        this._favouriteTournamentService = _favouriteTournamentService;
-    }
-    // ionViewDidLoad(){
-    // }            
-    MyTeamPage.prototype.ionViewDidLoad = function () {
-        this.favTeams = this._favouriteTournamentService.getTheFavourites();
-    };
-    MyTeamPage.prototype.goToTournaments = function () {
-        this._nav.push(__WEBPACK_IMPORTED_MODULE_2__pages_exports__["h" /* TournamentPage */]);
-    };
-    MyTeamPage.prototype.favTeamTapped = function (favTeam) {
-        var _this = this;
-        var loader = this._loadingController.create({
-            content: "Loading..."
-        });
-        loader.present().then(function () {
-            _this._tournamentService.getCurrentTournamentData(favTeam.tournamentId)
-                .subscribe(function (data) { return _this._nav.push(__WEBPACK_IMPORTED_MODULE_2__pages_exports__["f" /* TeamHomePage */], favTeam.team); });
-            loader.dismiss();
-        });
-    };
-    MyTeamPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\myTeams\my-teams.page.html"*/'<ion-header>\n    <ion-navbar color="danger">\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>My Teams</ion-title>\n    </ion-navbar>\n</ion-header>\n<ion-content center text-center>\n\n    <ion-card *ngIf="!favTeams">\n        <img src="http://sites.wrk.ru/sites/uk/co/co/tiscali/myweb/theblackhole/allpages/j-smile_wow/lgeoops.jpg">\n        <ion-card-content>\n            <h1 text-uppercase> No Teams for now to Display</h1>\n        </ion-card-content>\n        <!--<ion-note>\n            11h ago\n        </ion-note>-->\n    </ion-card>\n\n    <ion-card *ngIf="favTeams">\n        <ion-card-content>\n            <ion-list>\n                <ion-list-header>\n                    <h2>My Favourite Teams</h2>\n                </ion-list-header>\n                <button ion-item *ngFor="let favTeam of favTeams" (click)="favTeamTapped(favTeam)">\n                    <ion-icon name="star"></ion-icon>  {{favTeam.team.name}}\n                    <p>{{favTeam.tournamentName}}</p>\n                </button>\n            </ion-list>\n        </ion-card-content>\n        <ion-note right>\n            Tap individuals to get more info\n        </ion-note>\n    </ion-card>\n\n    <div padding>\n        <h6>To Find more news and details about teams and Tournaments</h6>\n    </div>\n    <div class="col text-center">\n        <button full center ion-button round (click)="goToTournaments()"><ion-icon name="search"></ion-icon>Find a Tournament</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\myTeams\my-teams.page.html"*/
-        }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["b" /* TournamentService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["a" /* FavouriteTournamentService */]])
-    ], MyTeamPage);
-    return MyTeamPage;
-}());
-//# sourceMappingURL=my-teams.page.js.map
-
-/***/ }),
-
-/***/ 872:
+/***/ 876:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamDetailsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_shared_shared_pages__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__game_game_page__ = __webpack_require__(429);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__game_game_page__ = __webpack_require__(428);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1075,13 +1255,13 @@ var TeamDetailsPage = (function () {
 
 /***/ }),
 
-/***/ 873:
+/***/ 877:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_exports__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__ = __webpack_require__(62);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1147,13 +1327,13 @@ var TeamsPage = (function () {
 
 /***/ }),
 
-/***/ 874:
+/***/ 878:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TournamentPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_exports__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__ = __webpack_require__(62);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1207,13 +1387,13 @@ var TournamentPage = (function () {
 
 /***/ }),
 
-/***/ 875:
+/***/ 879:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return StandingPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_shared_shared_pages__ = __webpack_require__(62);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1254,13 +1434,13 @@ var StandingPage = (function () {
 
 /***/ }),
 
-/***/ 876:
+/***/ 880:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamHomePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_exports__ = __webpack_require__(75);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1297,13 +1477,13 @@ var TeamHomePage = (function () {
 
 /***/ }),
 
-/***/ 877:
+/***/ 881:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MapPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_shared_shared_pages__ = __webpack_require__(62);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1352,7 +1532,84 @@ var MapPage = (function () {
 }());
 //# sourceMappingURL=map.page.js.map
 
+/***/ }),
+
+/***/ 882:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MyApp; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(455);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(458);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_pages_exports__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_teamsDemo_teams_demo__ = __webpack_require__(425);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_tournamentsDemo_tournaments_demo__ = __webpack_require__(424);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login_page__ = __webpack_require__(426);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+var MyApp = (function () {
+    function MyApp(platform, statusBar, splashScreen) {
+        this.platform = platform;
+        this.statusBar = statusBar;
+        this.splashScreen = splashScreen;
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_pages_exports__["c" /* MyTeamPage */];
+        this.initializeApp();
+    }
+    MyApp.prototype.initializeApp = function () {
+        var _this = this;
+        this.platform.ready().then(function () {
+            // Okay, so the platform is ready and our plugins are available.
+            // Here you can do any higher level native things you might need.
+            _this.statusBar.styleDefault();
+            _this.splashScreen.hide();
+        });
+    };
+    MyApp.prototype.goHome = function () {
+        this.nav.popToRoot;
+    };
+    MyApp.prototype.goToTournaments = function () {
+        this.nav.push(__WEBPACK_IMPORTED_MODULE_4__pages_pages_exports__["h" /* TournamentPage */]);
+    };
+    MyApp.prototype.goToDemoTournaments = function () {
+        this.nav.push(__WEBPACK_IMPORTED_MODULE_6__pages_tournamentsDemo_tournaments_demo__["a" /* TournamentDemo */]);
+    };
+    MyApp.prototype.goToDemoTeams = function () {
+        this.nav.push(__WEBPACK_IMPORTED_MODULE_5__pages_teamsDemo_teams_demo__["a" /* TeamsDemo */]);
+    };
+    MyApp.prototype.goToLogin = function () {
+        this.nav.push(__WEBPACK_IMPORTED_MODULE_7__pages_login_login_page__["a" /* LoginPage */]);
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */]), 
+        __metadata('design:type', __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */])
+    ], MyApp.prototype, "nav", void 0);
+    MyApp = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\app\app.html"*/'<ion-menu [content]="content">\n    <ion-header color="danger">\n        <ion-toolbar>\n            <ion-title>Elite Schedule</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <ion-list-header>Navigate</ion-list-header>\n            <button menuClose ion-item (click)="goHome()">Home</button>\n            <button menuClose ion-item (click)="goToDemoTournaments()">Demo Tournaments</button>\n            <button menuClose ion-item (click)="goToDemoTeams()">Demo Teams</button>\n            <button menuClose ion-item (click)="goToTournaments()">Find a Tournament</button>\n            <button menuClose ion-item (click)="goToLogin()">Login</button>\n        </ion-list>\n    </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\app\app.html"*/
+        }), 
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+    ], MyApp);
+    return MyApp;
+}());
+//# sourceMappingURL=app.component.js.map
+
 /***/ })
 
-},[459]);
+},[464]);
 //# sourceMappingURL=main.js.map

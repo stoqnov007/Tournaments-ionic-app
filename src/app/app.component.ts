@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { MyTeamPage,TournamentPage } from '../pages/pages_exports';
 import { TeamsDemo } from './../pages/teamsDemo/teams-demo';
 import { TournamentDemo } from './../pages/tournamentsDemo/tournaments-demo';
+import { LoginPage } from './../pages/login/login.page';
 
 @Component({
   templateUrl: 'app.html'
@@ -44,5 +45,9 @@ export class MyApp {
 
   goToDemoTeams() {
     this.nav.push(TeamsDemo);
+  }
+
+  goToLogin() {
+    this.nav.push(LoginPage);
   }
 }
