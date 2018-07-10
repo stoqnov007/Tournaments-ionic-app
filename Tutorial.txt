@@ -2,6 +2,9 @@ This Ionic 2 application works with the following:
 1. Ionic 2 starter from TournamentsApp-with-ionic2: https://github.com/agnimitradas/TournamentsApp-with-ionic2
 2. Additional Node.js application for back-end to handle the following: 
    - Local database MongoDb with collections: "tournaments", "teams", "users" ...
+   OR
+   - Database in mLab with the same collections - https://mlab.com
+
    - User authentication (role based) with passport - local strategy + JWT(JSON Web Tokens) - register and login user
    - CRUD operations with Node.js, MongoDb and Mongoose API
  
@@ -50,7 +53,17 @@ Home -> Tournaments -> Tournament (listed teams about this tournament) -> Single
 08.07.2018:
 
 1. Created local mongodb "users"
-2. User authentication (role based) with passport - local strategy + JWT(JSON Web Tokens) - tutorial : https://www.joshmorony.com/creating-role-based-authentication-with-passport-in-ionic-2-part-1/
+2. User authentication (role based) with passport - local strategy + JWT(JSON Web Tokens) 
+- tutorial : https://www.joshmorony.com/creating-role-based-authentication-with-passport-in-ionic-2-part-1/
 3. Register user with email and password (register page)
 4. Login user (login page)
 4. TODO: Logout and admin menu
+
+
+09.07.2018:
+1.Logout and admin menu
+
+10.07.2018:
+1. Moving database from local mongoDb to mLab - https://mlab.com
+2. Moving the node.js app to separated Azure web app (deploying to Azure by Azure local git repozitory)
+- tutorial: https://github.com/Huachao/azure-content/blob/master/articles/app-service-api/app-service-api-nodejs-api-app.md

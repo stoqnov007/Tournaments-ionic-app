@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController, MenuController } from 'ionic-angular';
 import { Auth } from '../../app/shared/auth';
 import { MyTeamPage } from '../myTeams/my-teams.page';
  
@@ -14,7 +14,7 @@ export class SignupPage {
   password: string;
   loading: any;
  
-  constructor(public navCtrl: NavController, public authService: Auth, public loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, public menuCtrl: MenuController, public authService: Auth, public loadingCtrl: LoadingController) {
  
   }
  
@@ -32,6 +32,8 @@ export class SignupPage {
       this.loading.dismiss();
       console.log(result);
       this.navCtrl.setRoot(MyTeamPage);
+      this.menuCtrl.enable(true, 'authenticated');
+      this.menuCtrl.enable(false, 'unauthenticated')
     }, (err) => {
         this.loading.dismiss();
     });

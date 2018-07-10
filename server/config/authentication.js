@@ -73,7 +73,6 @@ exports.register = function(req, res, next){
         });
  
     });
- 
 }
  
 exports.roleAuthorization = function(roles){
@@ -97,7 +96,6 @@ exports.roleAuthorization = function(roles){
             return next('Unauthorized');
  
         });
- 
     }
  
 }

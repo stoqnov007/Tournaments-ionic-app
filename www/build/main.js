@@ -1,13 +1,104 @@
 webpackJsonp([0],{
 
-/***/ 254:
+/***/ 163:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Auth; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(105);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(256);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var Auth = (function () {
+    function Auth(http, storage) {
+        this.http = http;
+        this.storage = storage;
+    }
+    Auth.prototype.checkAuthentication = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            //Load token if exists
+            _this.storage.get('token').then(function (value) {
+                _this.token = value;
+                var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+                headers.append('Authorization', _this.token);
+                _this.http.get('https://tournamentsapi.azurewebsites.net/api/protected', { headers: headers })
+                    .subscribe(function (res) {
+                    resolve(res);
+                }, function (err) {
+                    reject(err);
+                });
+            });
+        });
+    };
+    Auth.prototype.createAccount = function (details) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+            headers.append('Content-Type', 'application/json');
+            _this.http.post('https://tournamentsapi.azurewebsites.net/api/register', JSON.stringify(details), { headers: headers })
+                .subscribe(function (res) {
+                var data = res.json();
+                _this.token = data.token;
+                _this.storage.set('token', data.token);
+                resolve(data);
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    Auth.prototype.login = function (credentials) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
+            headers.append('Content-Type', 'application/json');
+            _this.http.post('https://tournamentsapi.azurewebsites.net/api/login', JSON.stringify(credentials), { headers: headers })
+                .subscribe(function (res) {
+                var data = res.json();
+                _this.token = data.token;
+                _this.storage.set('token', data.token);
+                resolve(data);
+                resolve(res.json());
+            }, function (err) {
+                reject(err);
+            });
+        });
+    };
+    Auth.prototype.logout = function () {
+        this.storage.set('token', '');
+    };
+    Auth = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */], __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]])
+    ], Auth);
+    return Auth;
+}());
+//# sourceMappingURL=auth.js.map
+
+/***/ }),
+
+/***/ 255:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Dbservice; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(256);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -65,7 +156,7 @@ var Dbservice = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
         headers.append('Content-Type', 'application/json');
         return new Promise(function (resolve) {
-            _this.http.post('http://localhost:8080/api/tournaments/' + id, JSON.stringify(newData), { headers: headers })
+            return _this.http.post('http://localhost:8080/api/tournaments/' + id, JSON.stringify(newData), { headers: headers })
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 _this.data = data;
@@ -117,7 +208,7 @@ var Dbservice = (function () {
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
         headers.append('Content-Type', 'application/json');
         return new Promise(function (resolve) {
-            _this.http.post('http://localhost:8080/api/teams/' + id, JSON.stringify(newData), { headers: headers })
+            return _this.http.post('http://localhost:8080/api/teams/' + id, JSON.stringify(newData), { headers: headers })
                 .map(function (res) { return res.json(); })
                 .subscribe(function (data) {
                 _this.data = data;
@@ -140,99 +231,7 @@ var Dbservice = (function () {
 
 /***/ }),
 
-/***/ 257:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Auth; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_http__ = __webpack_require__(105);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(427);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_add_operator_map__);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var Auth = (function () {
-    function Auth(http, storage) {
-        this.http = http;
-        this.storage = storage;
-    }
-    Auth.prototype.checkAuthentication = function () {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            //Load token if exists
-            _this.storage.get('token').then(function (value) {
-                _this.token = value;
-                var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
-                headers.append('Authorization', _this.token);
-                _this.http.get('http://localhost:8080/api/protected', { headers: headers })
-                    .subscribe(function (res) {
-                    resolve(res);
-                }, function (err) {
-                    reject(err);
-                });
-            });
-        });
-    };
-    Auth.prototype.createAccount = function (details) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
-            headers.append('Content-Type', 'application/json');
-            _this.http.post('http://localhost:8080/api/register', JSON.stringify(details), { headers: headers })
-                .subscribe(function (res) {
-                var data = res.json();
-                _this.token = data.token;
-                _this.storage.set('token', data.token);
-                resolve(data);
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    Auth.prototype.login = function (credentials) {
-        var _this = this;
-        return new Promise(function (resolve, reject) {
-            var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["a" /* Headers */]();
-            headers.append('Content-Type', 'application/json');
-            _this.http.post('http://localhost:8080/api/login', JSON.stringify(credentials), { headers: headers })
-                .subscribe(function (res) {
-                var data = res.json();
-                _this.token = data.token;
-                _this.storage.set('token', data.token);
-                resolve(data);
-                resolve(res.json());
-            }, function (err) {
-                reject(err);
-            });
-        });
-    };
-    Auth.prototype.logout = function () {
-        this.storage.set('token', '');
-    };
-    Auth = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(), 
-        __metadata('design:paramtypes', [(typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_1__angular_http__["b" /* Http */]) === 'function' && _a) || Object, (typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */] !== 'undefined' && __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */]) === 'function' && _b) || Object])
-    ], Auth);
-    return Auth;
-    var _a, _b;
-}());
-//# sourceMappingURL=auth.js.map
-
-/***/ }),
-
-/***/ 258:
+/***/ 259:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -283,7 +282,7 @@ var MyTeamPage = (function () {
     MyTeamPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\myTeams\my-teams.page.html"*/'<ion-header>\n    <ion-navbar color="danger">\n        <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n        <ion-title>My Teams</ion-title>\n    </ion-navbar>\n</ion-header>\n<ion-content center text-center>\n\n    <ion-card *ngIf="!favTeams">\n        <img src="http://sites.wrk.ru/sites/uk/co/co/tiscali/myweb/theblackhole/allpages/j-smile_wow/lgeoops.jpg">\n        <ion-card-content>\n            <h1 text-uppercase> No Teams for now to Display</h1>\n        </ion-card-content>\n        <!--<ion-note>\n            11h ago\n        </ion-note>-->\n    </ion-card>\n\n    <ion-card *ngIf="favTeams">\n        <ion-card-content>\n            <ion-list>\n                <ion-list-header>\n                    <h2>My Favourite Teams</h2>\n                </ion-list-header>\n                <button ion-item *ngFor="let favTeam of favTeams" (click)="favTeamTapped(favTeam)">\n                    <ion-icon name="star"></ion-icon>  {{favTeam.team.name}}\n                    <p>{{favTeam.tournamentName}}</p>\n                </button>\n            </ion-list>\n        </ion-card-content>\n        <ion-note right>\n            Tap individuals to get more info\n        </ion-note>\n    </ion-card>\n\n    <div padding>\n        <h6>To Find more news and details about teams and Tournaments</h6>\n    </div>\n    <div class="col text-center">\n        <button full center ion-button round (click)="goToTournaments()"><ion-icon name="search"></ion-icon>Find a Tournament</button>\n    </div>\n\n</ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\myTeams\my-teams.page.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["b" /* TournamentService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["a" /* FavouriteTournamentService */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["b" /* TournamentService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["a" /* FavouriteTournamentService */]])
     ], MyTeamPage);
     return MyTeamPage;
 }());
@@ -291,7 +290,7 @@ var MyTeamPage = (function () {
 
 /***/ }),
 
-/***/ 295:
+/***/ 296:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -304,11 +303,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 295;
+webpackEmptyAsyncContext.id = 296;
 
 /***/ }),
 
-/***/ 347:
+/***/ 348:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -351,7 +350,7 @@ var AddTournamentPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'add-tournament-page',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\add\add.tournament.page.html"*/'<!-- !!! This page is used only in the modal, so dont show it !!! -->\n\n<!-- !!! This page is used only in the modal, so dont show it !!! -->\n\n<!-- !!! This page is used only in the modal, so dont show it !!! -->\n\n<ion-header>\n\n    <ion-toolbar transparent>\n\n     <ion-title>Add Tournament</ion-title>\n\n     <ion-buttons end>\n\n       <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>\n\n     </ion-buttons>\n\n    </ion-toolbar>\n\n   </ion-header>\n\n    \n\n   <ion-content>\n\n     <ion-list no-lines>\n\n       <ion-item>\n\n         <ion-label floating>Title</ion-label>\n\n         <ion-input [(ngModel)]="title" type="text" name="title"></ion-input>\n\n       </ion-item>\n\n    \n\n       <ion-item>\n\n         <ion-label floating>Description</ion-label>\n\n         <ion-textarea [(ngModel)]="description" name="description"></ion-textarea>\n\n       </ion-item>\n\n    \n\n       <ion-item>\n\n         <ion-range min="0" max="100" pin="true" [(ngModel)]="rating">\n\n           <ion-icon range-left name="sad"></ion-icon>\n\n           <ion-icon range-right name="happy"></ion-icon>\n\n         </ion-range>\n\n       </ion-item>\n\n    \n\n     </ion-list>\n\n    \n\n     <button ion-button full color="secondary" (click)="save()">Save</button>\n\n    \n\n   </ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\add\add.tournament.page.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
     ], AddTournamentPage);
     return AddTournamentPage;
 }());
@@ -359,7 +358,7 @@ var AddTournamentPage = (function () {
 
 /***/ }),
 
-/***/ 423:
+/***/ 424:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -402,7 +401,7 @@ var AddTeamsPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'add-teams-page',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\add\add-teams-page.html"*/'<!-- !!! This page is used only in the modal, so dont show it !!! -->\n\n<!-- !!! This page is used only in the modal, so dont show it !!! -->\n\n<!-- !!! This page is used only in the modal, so dont show it !!! -->\n\n<ion-header>\n\n    <ion-toolbar transparent>\n\n     <ion-title>Add Team</ion-title>\n\n     <ion-buttons end>\n\n       <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>\n\n     </ion-buttons>\n\n    </ion-toolbar>\n\n   </ion-header>\n\n    \n\n   <ion-content>\n\n     <ion-list no-lines>\n\n       <ion-item>\n\n         <ion-label floating>Title</ion-label>\n\n         <ion-input [(ngModel)]="title" type="text" name="title"></ion-input>\n\n       </ion-item>\n\n    \n\n       <ion-item>\n\n          <ion-label floating>Coach</ion-label>\n\n          <ion-input [(ngModel)]="coach" type="text" name="title"></ion-input>\n\n       </ion-item>\n\n    \n\n       <ion-item>\n\n          <ion-label>Add to Favourite</ion-label>\n\n          <ion-toggle [(ngModel)]="favourite"></ion-toggle>\n\n        </ion-item>\n\n    \n\n     </ion-list>\n\n    \n\n     <button ion-button full color="secondary" (click)="save()">Save</button>\n\n    \n\n   </ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\add\add-teams-page.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["l" /* ViewController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
     ], AddTeamsPage);
     return AddTeamsPage;
 }());
@@ -410,15 +409,15 @@ var AddTeamsPage = (function () {
 
 /***/ }),
 
-/***/ 424:
+/***/ 425:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TournamentDemo; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_shared_db_service__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_shared_db_service__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_add_tournament_page__ = __webpack_require__(347);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_add_tournament_page__ = __webpack_require__(348);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -517,7 +516,7 @@ var TournamentDemo = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
             selector: 'tournaments-demo',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\tournamentsDemo\tournaments-demo.html"*/' <ion-header>\n\n  <ion-navbar color="danger">\n\n      <ion-title>Pick a Tournament</ion-title>\n\n      <ion-buttons end>\n\n        <button ion-button icon-only (click)="addTournament()"><ion-icon name="add"></ion-icon></button>\n\n      </ion-buttons>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n    \n\n   <ion-content>\n\n    \n\n     <ion-list no-lines>\n\n       <ion-item-sliding *ngFor="let tournament of tournaments">\n\n    \n\n         <ion-item>\n\n    \n\n           <ion-avatar item-left>\n\n             <img src="https://api.adorable.io/avatars/75/{{tournament.title}}">\n\n           </ion-avatar>\n\n    \n\n           <h2>{{tournament.title}}</h2>\n\n           <p>{{tournament.description}}</p>\n\n    \n\n           <ion-icon *ngIf="tournament.rating < 50" danger name="sad"></ion-icon>\n\n           <ion-icon *ngIf="tournament.rating >= 50" secondary name="happy"></ion-icon>\n\n           {{tournament.rating}}\n\n    \n\n         </ion-item>\n\n    \n\n         <ion-item>\n\n           <button ion-button color="danger" (click)="deleteTournament(tournament)">\n\n             <ion-icon name="trash"></ion-icon>\n\n             Delete\n\n           </button>\n\n           <button ion-button color="secondary" (click)="getTournamentById(tournament)">\n\n            Edit\n\n          </button>\n\n         </ion-item>\n\n       </ion-item-sliding>\n\n    \n\n     </ion-list>\n\n    \n\n   </ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\tournamentsDemo\tournaments-demo.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_0__app_shared_db_service__["a" /* Dbservice */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* ModalController */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_0__app_shared_db_service__["a" /* Dbservice */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* ModalController */]])
     ], TournamentDemo);
     return TournamentDemo;
 }());
@@ -525,15 +524,15 @@ var TournamentDemo = (function () {
 
 /***/ }),
 
-/***/ 425:
+/***/ 426:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TeamsDemo; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_shared_db_service__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app_shared_db_service__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_add_teams_page__ = __webpack_require__(423);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__add_add_teams_page__ = __webpack_require__(424);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -617,7 +616,7 @@ var TeamsDemo = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["Component"])({
             selector: 'teams-demo',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\teamsDemo\teams-demo.html"*/' <ion-header>\n\n  <ion-navbar color="danger">\n\n      <ion-title>Teams</ion-title>\n\n      <ion-buttons end>\n\n        <button ion-button icon-only (click)="addTeam()"><ion-icon name="add"></ion-icon></button>\n\n      </ion-buttons>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n    \n\n   <ion-content>\n\n    \n\n     <ion-list no-lines>\n\n       <ion-item-sliding *ngFor="let team of teams">\n\n    \n\n         <ion-item>\n\n    \n\n           <h2>{{team.title}}</h2>\n\n           <p>{{team.coach}}</p>\n\n    \n\n         </ion-item>\n\n    \n\n         <ion-item>\n\n           <button ion-button color="danger" (click)="deleteTeam(team)">\n\n             <ion-icon name="trash"></ion-icon>\n\n             Delete\n\n           </button>\n\n           <button ion-button color="secondary" (click)="getTeamById(team)">\n\n            Edit\n\n          </button>\n\n         </ion-item>\n\n       </ion-item-sliding>\n\n    \n\n     </ion-list>\n\n    \n\n   </ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\teamsDemo\teams-demo.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_0__app_shared_db_service__["a" /* Dbservice */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["e" /* ModalController */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_2_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_0__app_shared_db_service__["a" /* Dbservice */], __WEBPACK_IMPORTED_MODULE_2_ionic_angular__["f" /* ModalController */]])
     ], TeamsDemo);
     return TeamsDemo;
 }());
@@ -625,15 +624,15 @@ var TeamsDemo = (function () {
 
 /***/ }),
 
-/***/ 426:
+/***/ 427:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LoginPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__ = __webpack_require__(259);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__signup_signup_page__ = __webpack_require__(454);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -650,8 +649,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var LoginPage = (function () {
-    function LoginPage(navCtrl, authService, loadingCtrl) {
+    function LoginPage(navCtrl, menuCtrl, authService, loadingCtrl) {
         this.navCtrl = navCtrl;
+        this.menuCtrl = menuCtrl;
         this.authService = authService;
         this.loadingCtrl = loadingCtrl;
     }
@@ -663,6 +663,8 @@ var LoginPage = (function () {
             console.log("Already authorized");
             _this.loading.dismiss();
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__["a" /* MyTeamPage */]);
+            _this.menuCtrl.enable(true, 'authenticated');
+            _this.menuCtrl.enable(false, 'unauthenticated');
         }, function (err) {
             console.log("Not already authorized");
             _this.loading.dismiss();
@@ -679,6 +681,8 @@ var LoginPage = (function () {
             _this.loading.dismiss();
             console.log(result);
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__["a" /* MyTeamPage */]);
+            _this.menuCtrl.enable(true, 'authenticated');
+            _this.menuCtrl.enable(false, 'unauthenticated');
         }, function (err) {
             _this.loading.dismiss();
             console.log(err);
@@ -695,9 +699,9 @@ var LoginPage = (function () {
     };
     LoginPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-            selector: 'login.page',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\login\login.page.html"*/'<ion-header>\n\n        <ion-navbar color="secondary">\n\n            <ion-title>Shared Todos</ion-title>\n\n        </ion-navbar>\n\n    </ion-header>\n\n     \n\n    <ion-content>\n\n     \n\n        <ion-row class="login-form">\n\n            <ion-col>\n\n                <ion-list inset>\n\n     \n\n                  <ion-item>\n\n                    <ion-label><ion-icon name="person"></ion-icon></ion-label>\n\n                    <ion-input [(ngModel)]="email" placeholder="email" type="text"></ion-input>\n\n                  </ion-item>\n\n     \n\n                  <ion-item>\n\n                    <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n\n                    <ion-input [(ngModel)]="password" placeholder="password" type="password"></ion-input>\n\n                  </ion-item>\n\n     \n\n                </ion-list>\n\n     \n\n                <button ion-button full (click)="login()" color="primary" class="login-button">Login</button>\n\n     \n\n            </ion-col>\n\n        </ion-row>\n\n     \n\n        <ion-row>\n\n            <ion-col>\n\n                <button ion-button (click)="launchSignup()" class="create-account">Create an Account</button>\n\n            </ion-col>\n\n        </ion-row>\n\n     \n\n    </ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\login\login.page.html"*/
+            selector: 'login.page',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\login\login.page.html"*/'<ion-header>\n\n        <ion-navbar color="danger">\n\n            <button ion-button menuToggle>\n\n          <ion-icon name="menu"></ion-icon>\n\n        </button>\n\n            <ion-title>Login</ion-title>\n\n        </ion-navbar>\n\n    </ion-header>\n\n     \n\n    <ion-content>\n\n     \n\n        <ion-row class="login-form">\n\n            <ion-col>\n\n                <ion-list inset>\n\n     \n\n                  <ion-item>\n\n                    <ion-label><ion-icon name="person"></ion-icon></ion-label>\n\n                    <ion-input [(ngModel)]="email" placeholder="email" type="text"></ion-input>\n\n                  </ion-item>\n\n     \n\n                  <ion-item>\n\n                    <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n\n                    <ion-input [(ngModel)]="password" placeholder="password" type="password"></ion-input>\n\n                  </ion-item>\n\n     \n\n                </ion-list>\n\n     \n\n                <button ion-button full (click)="login()" color="primary" class="login-button">Login</button>\n\n     \n\n            </ion-col>\n\n        </ion-row>\n\n     \n\n        <ion-row>\n\n            <ion-col>\n\n                <button ion-button (click)="launchSignup()" class="create-account">Create an Account</button>\n\n            </ion-col>\n\n        </ion-row>\n\n     \n\n    </ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\login\login.page.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* MenuController */], __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
     ], LoginPage);
     return LoginPage;
 }());
@@ -747,7 +751,7 @@ var Game = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-tournament',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\game\game.page.html"*/'<ion-header>\n\n    <ion-navbar color="danger">\n        <ion-title>Game</ion-title>\n    </ion-navbar>\n\n</ion-header>\n\n<ion-content padding>\n    <ion-card>\n        <ion-card-header>\n            <h1>{{gameData.team1}} {{gameData.homeAway}} {{gameData.team2}}</h1>\n            <h2>\n                <ion-icon name="calendar"></ion-icon> {{1468051200000 | date:\'dd MMM-yyyy\'}}\n            </h2>\n            <h1>Score: {{gameData.team1Score}} : {{gameData.team2Score}}</h1>\n        </ion-card-header>\n        <ion-card-content>\n            <ion-row>\n                <ion-col width-60>\n                    <h1>at {{gameData.location}}</h1>\n                </ion-col>\n                <ion-col width-20>\n                    <button outline round ion-button (click)="goToMap()"><ion-icon name="map"></ion-icon></button>\n                </ion-col>\n                <ion-col width-20>\n                    <button outline round ion-button (click)="goToNavigation()"><ion-icon name="navigate"></ion-icon></button>\n                </ion-col>\n            </ion-row>\n        </ion-card-content>\n    </ion-card>\n</ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\game\game.page.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["b" /* TournamentService */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["b" /* TournamentService */]])
     ], Game);
     return Game;
 }());
@@ -762,8 +766,8 @@ var Game = (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SignupPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__ = __webpack_require__(259);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -778,8 +782,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 var SignupPage = (function () {
-    function SignupPage(navCtrl, authService, loadingCtrl) {
+    function SignupPage(navCtrl, menuCtrl, authService, loadingCtrl) {
         this.navCtrl = navCtrl;
+        this.menuCtrl = menuCtrl;
         this.authService = authService;
         this.loadingCtrl = loadingCtrl;
     }
@@ -795,6 +800,8 @@ var SignupPage = (function () {
             _this.loading.dismiss();
             console.log(result);
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__myTeams_my_teams_page__["a" /* MyTeamPage */]);
+            _this.menuCtrl.enable(true, 'authenticated');
+            _this.menuCtrl.enable(false, 'unauthenticated');
         }, function (err) {
             _this.loading.dismiss();
         });
@@ -809,7 +816,7 @@ var SignupPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'signup.page',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\signup\signup.page.html"*/'<ion-header>\n\n \n\n        <ion-navbar color="secondary">\n\n          <ion-title>Create Account</ion-title>\n\n        </ion-navbar>\n\n       \n\n      </ion-header>\n\n       \n\n       \n\n      <ion-content padding>\n\n       \n\n          <ion-row class="account-form">\n\n              <ion-col>\n\n                  <ion-list inset>\n\n       \n\n                      <ion-item>\n\n                          <ion-label><ion-icon name="mail"></ion-icon></ion-label>\n\n                          <ion-input [(ngModel)]="email" placeholder="Email" type="email"></ion-input>\n\n                      </ion-item>\n\n       \n\n                      <ion-item>\n\n                          <ion-label><ion-icon name="lock"></ion-icon></ion-label>\n\n                          <ion-input [(ngModel)]="password" placeholder="Password" type="password"></ion-input>\n\n                      </ion-item>\n\n       \n\n                      <ion-item>\n\n                          <ion-label>Role</ion-label>\n\n                          <ion-select [(ngModel)]="role">\n\n                              <ion-option value="reader">Reader</ion-option>\n\n                              <ion-option value="creator">Creator</ion-option>\n\n                              <ion-option value="editor">Editor</ion-option>\n\n                          </ion-select>\n\n                      </ion-item>\n\n       \n\n                  </ion-list>\n\n       \n\n                  <button ion-button (click)="register()" class="continue-button">Register</button>\n\n       \n\n              </ion-col>\n\n          </ion-row>\n\n       \n\n      </ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\signup\signup.page.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* MenuController */], __WEBPACK_IMPORTED_MODULE_2__app_shared_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
     ], SignupPage);
     return SignupPage;
 }());
@@ -836,26 +843,26 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_add_add_tournament_page__ = __webpack_require__(347);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_add_add_teams_page__ = __webpack_require__(423);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_tournamentsDemo_tournaments_demo__ = __webpack_require__(424);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_teamsDemo_teams_demo__ = __webpack_require__(425);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login_page__ = __webpack_require__(426);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__pages_add_add_tournament_page__ = __webpack_require__(348);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__pages_add_add_teams_page__ = __webpack_require__(424);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_tournamentsDemo_tournaments_demo__ = __webpack_require__(425);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_teamsDemo_teams_demo__ = __webpack_require__(426);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_login_login_page__ = __webpack_require__(427);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_signup_signup_page__ = __webpack_require__(454);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_db_service__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__shared_db_service__ = __webpack_require__(255);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__angular_platform_browser__ = __webpack_require__(80);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__angular_http__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10_ionic_angular__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__app_component__ = __webpack_require__(882);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_storage__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_storage__ = __webpack_require__(258);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_status_bar__ = __webpack_require__(455);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_native_splash_screen__ = __webpack_require__(458);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angular2_google_maps_core__ = __webpack_require__(885);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15_angular2_google_maps_core___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15_angular2_google_maps_core__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_pages_exports__ = __webpack_require__(75);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__shared_shared_pages__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__shared_auth__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__shared_auth__ = __webpack_require__(163);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1028,7 +1035,7 @@ var TournamentService = (function () {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__game_game_page__ = __webpack_require__(428);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_0__game_game_page__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__myTeams_my_teams_page__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__myTeams_my_teams_page__ = __webpack_require__(259);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "c", function() { return __WEBPACK_IMPORTED_MODULE_1__myTeams_my_teams_page__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__teamDetail_team_detail_page__ = __webpack_require__(876);
 /* harmony namespace reexport (by used) */ __webpack_require__.d(__webpack_exports__, "e", function() { return __WEBPACK_IMPORTED_MODULE_2__teamDetail_team_detail_page__["a"]; });
@@ -1247,7 +1254,7 @@ var TeamDetailsPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-tournament',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\teamDetail\team-detail.page.html"*/'<ion-header>\n\n    <ion-navbar>\n        <ion-title></ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content>\n    <ion-card center text center>\n        <ion-row>\n            <ion-col>\n                <h3 padding>Division: {{team.division}}</h3>\n                <h3 padding>Coach: {{team.coach}}</h3>\n            </ion-col>\n        </ion-row>\n        <ion-row>\n            <ion-col width-75>\n                <h2 padding>Add to Favourite</h2>\n            </ion-col>\n            <ion-col width-25>\n                <ion-toggle padding item-right (ionChange)="addToFavourites(team)" [(ngModel)]="isFollowing" checked="isFollowing"></ion-toggle>\n            </ion-col>\n        </ion-row>\n    </ion-card>\n    <ion-card>\n        <ion-list>\n            <ion-card-header>\n                <h1>Previous Matches</h1>\n            </ion-card-header>\n            <ion-row>\n                <ion-col>\n                    <ion-item *ngFor="let game of allGames" (click)="gameClicked($event,game)">\n                        <ion-row>\n                            <ion-col width-20>\n                                <p>{{game.time | date:\'M/d/yy\'}}</p>\n                                <p>{{game.time | date:\'shortTime\'}}</p>\n                            </ion-col>\n                            <ion-col width-70>\n                                <p>{{game.opponent}}</p>\n                            </ion-col>\n                            <ion-col width-10>\n                                <ion-badge item-right [color]="getWinOrLossClass(game)">{{winOrLossBadge(game)}}</ion-badge>\n                            </ion-col>\n                        </ion-row>\n                        <!--{{game.opponent}}<span style="float: right">{{game.scoreDisplay}}</span>-->\n                    </ion-item>\n                </ion-col>\n            </ion-row>\n        </ion-list>\n    </ion-card>\n</ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\teamDetail\team-detail.page.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__app_shared_shared_pages__["b" /* TournamentService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* ToastController */], __WEBPACK_IMPORTED_MODULE_2__app_shared_shared_pages__["a" /* FavouriteTournamentService */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__app_shared_shared_pages__["b" /* TournamentService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */], __WEBPACK_IMPORTED_MODULE_2__app_shared_shared_pages__["a" /* FavouriteTournamentService */]])
     ], TeamDetailsPage);
     return TeamDetailsPage;
 }());
@@ -1319,7 +1326,7 @@ var TeamsPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-tournament',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\teams\teams.page.html"*/'<ion-header>\n\n    <ion-navbar color="danger">\n        <ion-title>{{tournamentDetails.name}} Teams</ion-title>\n    </ion-navbar>\n\n    <ion-navbar>\n        <ion-searchbar placeholder="Search your Teams here" [(ngModel)]="searchKey" (ionInput)="updateTeams(teamsDetails)"></ion-searchbar>\n    </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n    <button ion-item (click)="itemTapped($event,teamDetails)" *ngFor="let teamDetails of teamsDetails">\n            {{teamDetails.name}}\n    </button>\n</ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\teams\teams.page.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["b" /* TournamentService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["b" /* TournamentService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
     ], TeamsPage);
     return TeamsPage;
 }());
@@ -1379,7 +1386,7 @@ var TournamentPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-tournament',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\tournament\tournament.html"*/'<!--\n  Generated template for the Tournament page.\n\n  See http://ionicframework.com/docs/v2/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n    <ion-navbar color="danger">\n        <ion-title>Pick a Tournament</ion-title>\n    </ion-navbar>\n\n</ion-header>\n\n\n<ion-content padding>\n    <ion-list>\n        <ion-list-header>\n            <h2>Availabe Tournaments</h2>\n        </ion-list-header>\n        <button *ngFor="let tournament of tournaments" ion-item (click)="itemTapped($event,tournament)">\n            {{tournament.name}}\n        </button>\n    </ion-list>\n</ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\tournament\tournament.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["b" /* TournamentService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_3__app_shared_shared_pages__["b" /* TournamentService */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
     ], TournamentPage);
     return TournamentPage;
 }());
@@ -1426,7 +1433,7 @@ var StandingPage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-standing',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\Standings\standing.page.html"*/'<ion-header>\n\n    <ion-navbar>\n        <ion-title></ion-title>\n    </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n    <ion-card>\n\n    </ion-card>\n    <ion-card>\n        <ion-row>\n            <ion-col width-50>Team</ion-col>\n            <ion-col width-15>W</ion-col>\n            <ion-col width-15>L</ion-col>\n            <ion-col width-20>Points Diff</ion-col>\n        </ion-row>\n        <ion-row *ngFor="let tourney of tournamentData">\n            <ion-col width-50>{{tourney.teamName}}</ion-col>\n            <ion-col width-15>{{tourney.wins}}</ion-col>\n            <ion-col width-15>{{tourney.losses}}</ion-col>\n            <ion-col width-20>{{tourney.pointsDiff}}</ion-col>\n        </ion-row>\n    </ion-card>\n</ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\Standings\standing.page.html"*/,
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__app_shared_shared_pages__["b" /* TournamentService */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__app_shared_shared_pages__["b" /* TournamentService */]])
     ], StandingPage);
     return StandingPage;
 }());
@@ -1469,7 +1476,7 @@ var TeamHomePage = (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
             selector: 'page-team-home',template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\TeamHome\team-home.page.html"*/'<ion-header>\n\n    <ion-navbar color="danger">\n        <ion-title>{{team.name}}</ion-title>\n        <ion-buttons end>\n            <button (click)="goHome()">\n                 <ion-icon name="home"></ion-icon>Home\n            </button>\n        </ion-buttons>\n    </ion-navbar>\n</ion-header>\n\n<ion-tabs>\n    <ion-tab tabTitle="Team" [root]=teamDetailedTab [rootParams]="team" tabIcon="baseball"></ion-tab>\n    <ion-tab tabTitle="Standings" [root]=standingsTab [rootParams]="team" tabIcon="podium"></ion-tab>\n</ion-tabs>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\TeamHome\team-home.page.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */]])
     ], TeamHomePage);
     return TeamHomePage;
 }());
@@ -1526,7 +1533,7 @@ var MapPage = (function () {
     MapPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\map\map.page.html"*/'<ion-header>\n    <ion-navbar color="primary">\n        <ion-title>Map</ion-title>\n    </ion-navbar>\n</ion-header>\n\n<ion-content class="map-page">\n    <ion-fab left bottom>\n        <button ion-fab class="fab-map" (click)="getDirections()">\n            <ion-icon name="navigate"></ion-icon>\n        </button>\n    </ion-fab>\n\n    <sebm-google-map id="map" style="width: 100%;height: 100%;opacity: 0;transition: opacity 150ms ease-in" [latitude]="map.lat" [longitude]="map.lng" [zoom]="map.zoom">\n        <sebm-google-map-marker [latitude]="map.lat" [longitude]="map.lng">\n            <sebm-google-map-info-window>\n                <strong>{{map.markerLabel}}</strong>\n            </sebm-google-map-info-window>\n        </sebm-google-map-marker>\n    </sebm-google-map>\n\n</ion-content>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\pages\map\map.page.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__app_shared_shared_pages__["b" /* TournamentService */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* NavParams */], __WEBPACK_IMPORTED_MODULE_2__app_shared_shared_pages__["b" /* TournamentService */]])
     ], MapPage);
     return MapPage;
 }());
@@ -1544,9 +1551,11 @@ var MapPage = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(455);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(458);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_pages_exports__ = __webpack_require__(75);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_teamsDemo_teams_demo__ = __webpack_require__(425);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_tournamentsDemo_tournaments_demo__ = __webpack_require__(424);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login_page__ = __webpack_require__(426);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_teamsDemo_teams_demo__ = __webpack_require__(426);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_tournamentsDemo_tournaments_demo__ = __webpack_require__(425);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_login_login_page__ = __webpack_require__(427);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__app_shared_auth__ = __webpack_require__(163);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_storage__ = __webpack_require__(258);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1564,12 +1573,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
+
 var MyApp = (function () {
-    function MyApp(platform, statusBar, splashScreen) {
+    function MyApp(platform, storage, auth, statusBar, menuCtrl, splashScreen) {
         this.platform = platform;
+        this.storage = storage;
+        this.auth = auth;
         this.statusBar = statusBar;
+        this.menuCtrl = menuCtrl;
         this.splashScreen = splashScreen;
         this.rootPage = __WEBPACK_IMPORTED_MODULE_4__pages_pages_exports__["c" /* MyTeamPage */];
+        this.init = false;
+        this.user = true;
         this.initializeApp();
     }
     MyApp.prototype.initializeApp = function () {
@@ -1579,6 +1595,16 @@ var MyApp = (function () {
             // Here you can do any higher level native things you might need.
             _this.statusBar.styleDefault();
             _this.splashScreen.hide();
+            _this.storage.get('token').then(function (res) {
+                if (res) {
+                    _this.menuCtrl.enable(true, 'authenticated');
+                    _this.menuCtrl.enable(false, 'unauthenticated');
+                }
+                else {
+                    _this.menuCtrl.enable(false, 'authenticated');
+                    _this.menuCtrl.enable(true, 'unauthenticated');
+                }
+            });
         });
     };
     MyApp.prototype.goHome = function () {
@@ -1596,14 +1622,20 @@ var MyApp = (function () {
     MyApp.prototype.goToLogin = function () {
         this.nav.push(__WEBPACK_IMPORTED_MODULE_7__pages_login_login_page__["a" /* LoginPage */]);
     };
+    MyApp.prototype.logout = function () {
+        this.auth.logout();
+        this.user = false;
+        this.menuCtrl.enable(false, 'authenticated');
+        this.menuCtrl.enable(true, 'unauthenticated');
+    };
     __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */]), 
-        __metadata('design:type', __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* Nav */])
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["ViewChild"])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */]), 
+        __metadata('design:type', __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\app\app.html"*/'<ion-menu [content]="content">\n    <ion-header color="danger">\n        <ion-toolbar>\n            <ion-title>Elite Schedule</ion-title>\n        </ion-toolbar>\n    </ion-header>\n\n    <ion-content>\n        <ion-list>\n            <ion-list-header>Navigate</ion-list-header>\n            <button menuClose ion-item (click)="goHome()">Home</button>\n            <button menuClose ion-item (click)="goToDemoTournaments()">Demo Tournaments</button>\n            <button menuClose ion-item (click)="goToDemoTeams()">Demo Teams</button>\n            <button menuClose ion-item (click)="goToTournaments()">Find a Tournament</button>\n            <button menuClose ion-item (click)="goToLogin()">Login</button>\n        </ion-list>\n    </ion-content>\n\n</ion-menu>\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({template:/*ion-inline-start:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\app\app.html"*/'<ion-menu id="unauthenticated" [content]="content">\n\n    <ion-header color="danger">\n\n        <ion-toolbar>\n\n            <ion-title>Elite Schedule</ion-title>\n\n        </ion-toolbar>\n\n    </ion-header>\n\n    <ion-content>\n\n        <ion-list>\n\n            <ion-list-header>Navigate</ion-list-header>\n\n            <button menuClose ion-item (click)="goHome()">Home</button>\n\n            <button menuClose ion-item (click)="goToTournaments()">Find a Tournament</button>\n\n            <button menuClose ion-item (click)="goToLogin()">Login</button>\n\n        </ion-list>\n\n    </ion-content>\n\n</ion-menu>\n\n\n\n<ion-menu id="authenticated" [content]="content">\n\n        <ion-header color="danger">\n\n            <ion-toolbar>\n\n                <ion-title>Elite Schedule</ion-title>\n\n            </ion-toolbar>\n\n        </ion-header>\n\n    \n\n        <ion-content>\n\n            <ion-list>\n\n                <ion-list-header>Navigate</ion-list-header>\n\n                <button menuClose ion-item (click)="goHome()">Home</button>\n\n                <button menuClose ion-item (click)="goToTournaments()">Find a Tournament</button>\n\n                <button menuClose ion-item (click)="logout()">Logout</button>\n\n            </ion-list>\n\n            <ion-list>\n\n                <ion-list-header>Admin menu</ion-list-header>\n\n                <button menuClose ion-item (click)="goToDemoTournaments()">Demo Tournaments</button>\n\n                <button menuClose ion-item (click)="goToDemoTeams()">Demo Teams</button>\n\n            </ion-list>\n\n        </ion-content>\n\n    \n\n    </ion-menu>\n\n\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\Users\S.Stoyanov\Desktop\TournamentsApp-with-ionic2\src\app\app.html"*/
         }), 
-        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
+        __metadata('design:paramtypes', [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */], __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */], __WEBPACK_IMPORTED_MODULE_8__app_shared_auth__["a" /* Auth */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* MenuController */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
     return MyApp;
 }());

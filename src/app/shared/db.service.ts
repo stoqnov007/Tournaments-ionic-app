@@ -63,7 +63,7 @@ export class Dbservice {
 
     return new Promise(resolve => {
  
-      this.http.post('http://localhost:8080/api/tournaments/' + id, JSON.stringify(newData), {headers: headers})
+     return this.http.post('http://localhost:8080/api/tournaments/' + id, JSON.stringify(newData), {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
@@ -133,7 +133,7 @@ export class Dbservice {
 
     return new Promise(resolve => {
  
-      this.http.post('http://localhost:8080/api/teams/' + id, JSON.stringify(newData), {headers: headers})
+      return this.http.post('http://localhost:8080/api/teams/' + id, JSON.stringify(newData), {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;

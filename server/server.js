@@ -14,9 +14,10 @@ var AuthenticationController = require('./config/authentication'),
 var requireAuth = passport.authenticate('jwt', {session: false}),
     requireLogin = passport.authenticate('local', {session: false});
  
+var databaseConfig = require('./config/database');
 // Configuration
-mongoose.connect('mongodb://localhost/tournaments', { useMongoClient: true });
- 
+//mongoose.connect('mongodb://localhost/tournaments', { useMongoClient: true });
+mongoose.connect(databaseConfig.url, { useMongoClient: true });
 app.use(morgan('dev'));                                         // log every request to the console
 app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
 app.use(bodyParser.json());                                     // parse application/json
@@ -188,7 +189,7 @@ var Team = mongoose.model('teams', {
         Team.create({
             title : req.body.title,
             coach : req.body.coach,
-            favourite: req.body.favourite,
+            favourite: req.body.favourite || false,
             done : false
         }, function(err, team) {
             if (err)
@@ -242,5 +243,5 @@ var Team = mongoose.model('teams', {
  
  
 // listen (start app with node server.js) ======================================
-app.listen(8080);
+app.listen(process.env.PORT || 8080);
 console.log("App listening on port 8080");

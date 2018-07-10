@@ -8,9 +8,7 @@ export class Auth {
  
   public token: any;
  
-  constructor(public http: Http, public storage: Storage) {
- 
-  }
+  constructor(public http: Http, public storage: Storage) {}
  
   checkAuthentication(){
  
@@ -24,7 +22,7 @@ export class Auth {
             let headers = new Headers();
             headers.append('Authorization', this.token);
  
-            this.http.get('http://localhost:8080/api/protected', {headers: headers})
+            this.http.get('https://tournamentsapi.azurewebsites.net/api/protected', {headers: headers})
                 .subscribe(res => {
                     resolve(res);
                 }, (err) => {
@@ -44,7 +42,7 @@ export class Auth {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
  
-        this.http.post('http://localhost:8080/api/register', JSON.stringify(details), {headers: headers})
+        this.http.post('https://tournamentsapi.azurewebsites.net/api/register', JSON.stringify(details), {headers: headers})
           .subscribe(res => {
  
             let data = res.json();
@@ -67,7 +65,7 @@ export class Auth {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
  
-        this.http.post('http://localhost:8080/api/login', JSON.stringify(credentials), {headers: headers})
+        this.http.post('https://tournamentsapi.azurewebsites.net/api/login', JSON.stringify(credentials), {headers: headers})
           .subscribe(res => {
  
             let data = res.json();
@@ -79,7 +77,6 @@ export class Auth {
           }, (err) => {
             reject(err);
           });
- 
     });
  
   }

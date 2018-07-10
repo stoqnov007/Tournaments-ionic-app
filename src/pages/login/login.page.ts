@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, LoadingController } from 'ionic-angular';
+import { NavController, LoadingController, MenuController } from 'ionic-angular';
 import { Auth } from '../../app/shared/auth';
 import { MyTeamPage } from '../myTeams/my-teams.page';
 import { SignupPage } from '../signup/signup.page';
@@ -14,7 +14,7 @@ export class LoginPage {
     password: string;
     loading: any;
  
-    constructor(public navCtrl: NavController, public authService: Auth, public loadingCtrl: LoadingController) {
+    constructor(public navCtrl: NavController, public menuCtrl: MenuController, public authService: Auth, public loadingCtrl: LoadingController) {
  
     }
  
@@ -27,6 +27,8 @@ export class LoginPage {
             console.log("Already authorized");
             this.loading.dismiss();
             this.navCtrl.setRoot(MyTeamPage);
+            this.menuCtrl.enable(true, 'authenticated');
+            this.menuCtrl.enable(false, 'unauthenticated')
         }, (err) => {
             console.log("Not already authorized");
             this.loading.dismiss();
@@ -47,6 +49,8 @@ export class LoginPage {
             this.loading.dismiss();
             console.log(result);
             this.navCtrl.setRoot(MyTeamPage);
+            this.menuCtrl.enable(true, 'authenticated');
+            this.menuCtrl.enable(false, 'unauthenticated')
         }, (err) => {
             this.loading.dismiss();
             console.log(err);
