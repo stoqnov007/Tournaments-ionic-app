@@ -1,7 +1,7 @@
 import { MyTeamPage } from './../myTeams/my-teams.page';
 import { Dbservice } from '../../app/shared/db.service';
 import { Component } from "@angular/core";
-import { NavController, ModalController } from 'ionic-angular';
+import { NavController, ModalController, AlertController  } from 'ionic-angular';
 import { AddTeamsPage } from '../add/add-teams-page';
  
 @Component({
@@ -14,9 +14,13 @@ export class TeamsDemo {
   title: string;
   coach: string;
   favourite: boolean;
+  error: string;
   //updatedData = [];
  
-  constructor(public nav: NavController, public teamService: Dbservice, public modalCtrl: ModalController) {
+  constructor(public nav: NavController, 
+              public teamService: Dbservice,
+              private alertCtrl: AlertController, 
+              public modalCtrl: ModalController) {
  
   }
  
@@ -35,16 +39,39 @@ export class TeamsDemo {
         this.teams = data;
       });
   }
+
+  presentAlert(title: string, subtitle: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: this.error,
+      buttons: ['Dismiss']
+    });
+    alert.present();
+  }
  
   addTeam(){
  
     let modal = this.modalCtrl.create(AddTeamsPage, {});
     modal.onDidDismiss(team => {
       if(team){
-        this.teams.push(team);
-        this.teamService.createTeam(team).subscribe((data) => {
-            
-        });     
+
+        this.teamService.createTeam(team).then((data) => {
+          // Error handling
+          if(data.errors) {
+            this.error = data.errors.title.message;
+            // Show Alert with error message
+            this.presentAlert("Error", this.error);
+          }
+          else{
+            this.teams.push(team);
+          }
+        }).then((msg) => {
+          //console.log("The msg 2 is: " + msg)
+            this.teamService.getTeams().then((data) => {
+                //console.log(data);
+                this.teams = data;
+              })
+        });      
       }
     });
     modal.present();
@@ -55,7 +82,8 @@ export class TeamsDemo {
         let data = {
             title: team.title,
             coach: team.coach,
-            favourite: team.favourite
+            favourite: team.favourite,
+            toolbarTitle: "Edit Team"
         }
         this.editTeam(team._id, data)
     })

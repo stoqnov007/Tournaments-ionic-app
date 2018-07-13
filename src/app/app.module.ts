@@ -1,4 +1,5 @@
 import { AddTournamentPage } from './../pages/add/add-tournament-page';
+import { EditTournamentPage } from './../pages/edit/edit-tournament-page';
 import { AddTeamsPage } from './../pages/add/add-teams-page';
 import { TournamentDemo } from './../pages/tournamentsDemo/tournaments-demo';
 import { TeamsDemo } from './../pages/teamsDemo/teams-demo';
@@ -24,6 +25,7 @@ import { Auth } from './shared/auth';
     MyApp,
     MyTeamPage,
     AddTournamentPage,
+    EditTournamentPage,
     AddTeamsPage,
     TournamentPage,
     TournamentDemo,
@@ -49,6 +51,7 @@ import { Auth } from './shared/auth';
     MyApp,
     MyTeamPage,
     AddTournamentPage,
+    EditTournamentPage,
     AddTeamsPage,
     TournamentPage,
     TournamentDemo,

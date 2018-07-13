@@ -6,6 +6,8 @@ var morgan = require('morgan');             // log requests to the console (expr
 var bodyParser = require('body-parser');    // pull information from HTML POST (express4)
 var methodOverride = require('method-override'); // simulate DELETE and PUT (express4)
 var cors = require('cors');
+var uniqueValidator = require('mongoose-unique-validator');
+var Promise = require('bluebird');
 
 var AuthenticationController = require('./config/authentication'), 
     passportService = require('./config/passport'),
@@ -34,12 +36,16 @@ app.use(function(req, res, next) {
  
 // Tournaments
 // Models
-// var schema = new mongoose.Schema({ name: 'string', size: 'string' });
-var Tournament = mongoose.model('tournaments', {
-    title: String,
+var tournamentSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        unique: true
+    },
     description: String,
-    rating: Number
+    selectedTeams: Array
 });
+tournamentSchema.plugin(uniqueValidator, { message: 'The title of the Tournament must be unique!' });
+var Tournament = mongoose.model('tournaments', tournamentSchema);
  
 // Routes
 
@@ -70,7 +76,7 @@ var Tournament = mongoose.model('tournaments', {
 
     // get tournament by id
     app.get('/api/tournaments/:tournament_id', function(req, res) {
-        Tournament.find({
+        Tournament.findById({
             _id : req.params.tournament_id
         }, function(err, tournament) {
             if (err)
@@ -84,23 +90,29 @@ var Tournament = mongoose.model('tournaments', {
     app.post('/api/tournaments', function(req, res) {
  
         console.log("creating tournament");
- 
+        
         // create a tournament, information comes from request from Ionic
-        Tournament.create({
+
+        Promise.resolve(Tournament.create({
             title : req.body.title,
             description : req.body.description,
-            rating: req.body.rating,
+            selectedTeams: req.body.selectedTeams,
             done : false
         }, function(err, tournament) {
             if (err)
                 res.send(err);
  
-            // get and return all the tournaments after you create another
+            // get and return all the teams after you create another
             Tournament.find(function(err, tournaments) {
                 if (err)
                     res.send(err)
                 res.json(tournaments);
             });
+        }))
+        .then()
+        .catch(function(err) {
+            console.log('Something went wrong!', err);
+            res.status(500).json(err); 
         });
  
     });
@@ -115,7 +127,7 @@ var Tournament = mongoose.model('tournaments', {
         {
             title : req.body.title,
             description : req.body.description,
-            rating: req.body.rating,
+            selectedTeams: req.body.selectedTeams,
             done : false
         },
         function(err, tournament) {
@@ -143,12 +155,17 @@ var Tournament = mongoose.model('tournaments', {
 
 // Teams
 // Models
-// var schema = new mongoose.Schema({ name: 'string', size: 'string' });
-var Team = mongoose.model('teams', {
-    title: String,
+var teamSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        unique: true
+    },
     coach: String,
     favourite: Boolean
 });
+teamSchema.plugin(uniqueValidator, { message: 'The title of the Team must be unique!' });
+
+var Team = mongoose.model('teams', teamSchema);
  
 // Routes
  
@@ -186,7 +203,7 @@ var Team = mongoose.model('teams', {
         console.log("creating team");
  
         // create a team, information comes from request from Ionic
-        Team.create({
+        Promise.resolve(Team.create({
             title : req.body.title,
             coach : req.body.coach,
             favourite: req.body.favourite || false,
@@ -201,6 +218,11 @@ var Team = mongoose.model('teams', {
                     res.send(err)
                 res.json(teams);
             });
+        }))
+        .then()
+        .catch(function(err) {
+            console.log('Something went wrong!', err);
+            res.status(500).json(err); 
         });
  
     });

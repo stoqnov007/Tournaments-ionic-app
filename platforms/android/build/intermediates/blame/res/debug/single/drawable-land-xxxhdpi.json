@@ -1,5 +1,9 @@
 [
     {
+        "merged": "C:\\Users\\S.Stoyanov\\Desktop\\TournamentsApp-with-ionic2\\platforms\\android\\build\\intermediates\\res\\merged\\debug\\drawable-land-xxxhdpi\\screen.png",
+        "source": "C:\\Users\\S.Stoyanov\\Desktop\\TournamentsApp-with-ionic2\\platforms\\android\\res\\drawable-land-xxxhdpi\\screen.png"
+    },
+    {
         "merged": "C:\\Users\\PC\\BSH Ltd\\OneDrive - BSH Ltd\\Projects\\TournamentsApp-with-ionic2-master\\platforms\\android\\build\\intermediates\\res\\merged\\debug\\drawable-land-xxxhdpi\\screen.png",
         "source": "C:\\Users\\PC\\BSH Ltd\\OneDrive - BSH Ltd\\Projects\\TournamentsApp-with-ionic2-master\\platforms\\android\\res\\drawable-land-xxxhdpi\\screen.png"
     }

@@ -1,6 +1,6 @@
  <ion-header>
   <ion-navbar color="danger">
-      <ion-title>Pick a Tournament</ion-title>
+      <ion-title>Manage Tournaments</ion-title>
       <ion-buttons end>
         <button ion-button icon-only (click)="addTournament()"><ion-icon name="add"></ion-icon></button>
       </ion-buttons>
@@ -22,9 +22,9 @@
            <h2>{{tournament.title}}</h2>
            <p>{{tournament.description}}</p>
     
-           <ion-icon *ngIf="tournament.rating < 50" danger name="sad"></ion-icon>
+           <!-- <ion-icon *ngIf="tournament.rating < 50" danger name="sad"></ion-icon>
            <ion-icon *ngIf="tournament.rating >= 50" secondary name="happy"></ion-icon>
-           {{tournament.rating}}
+           {{tournament.rating}} -->
     
          </ion-item>
     

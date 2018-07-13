@@ -6,6 +6,8 @@ import 'rxjs/add/operator/map';
 export class Dbservice {
  
   data: any;
+  error: any;
+  private apiUrl = 'https://tournamentsapi.azurewebsites.net/api';
  
   constructor(public http: Http) {
     this.data = null;
@@ -14,13 +16,13 @@ export class Dbservice {
   // Tournaments
   getTournaments(){
  
-    if (this.data) {
-      return Promise.resolve(this.data);
-    }
+    // if (this.data) {
+    //   return Promise.resolve(this.data);
+    // }
  
     return new Promise(resolve => {
  
-      this.http.get('http://localhost:8080/api/tournaments')
+      this.http.get(`${this.apiUrl}/tournaments`)
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
@@ -30,32 +32,46 @@ export class Dbservice {
  
   }
 
-  getTournamentById(_id) {
-
-    return new Promise(resolve => {
- 
-      this.http.get(`http://localhost:8080/api/tournaments/${_id}`)
-        .map(res => res.json())
+  getTournamentById(_id): Promise<any> {
+    return  new Promise(resolve => {
+      return this.http.get(`${this.apiUrl}/tournaments/${_id}`)
+      .map(res => res.json())
         .subscribe(data => {
           this.data = data;
           resolve(this.data);
         });
-    });
+      });
   } 
  
-  createTournament(tournament){
+  createTournament(tournament): Promise<any>{
  
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
  
-   return  this.http.post('http://localhost:8080/api/tournaments', JSON.stringify(tournament), {headers: headers})
-      .map(res => {
-        console.log(res.json());
-      });
- 
+   return  new Promise(resolve => {
+     return this.http.post(`${this.apiUrl}/tournaments`, JSON.stringify(tournament), {headers: headers})
+     .map(res => {
+      //console.log(res.json())
+      return res.json()
+    })
+       .subscribe(data => {
+         if(data.message != undefined){
+           // Error handling
+           // Get response from the server
+           this.error = data;
+           resolve(this.error);
+         }
+         this.data = data;
+         resolve(this.data);
+       });
+  })
+    .then((msg) => {
+      return msg;
+    });
+
   }
 
-  updateTournament(id, newData){
+  updateTournament(_id, newData){
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -63,19 +79,18 @@ export class Dbservice {
 
     return new Promise(resolve => {
  
-     return this.http.post('http://localhost:8080/api/tournaments/' + id, JSON.stringify(newData), {headers: headers})
+     return this.http.post(`${this.apiUrl}/tournaments/${_id}`, JSON.stringify(newData), {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
           resolve(this.data);
         });
     });
- 
   }
  
-  deleteTournament(id){
+  deleteTournament(_id){
  
-    this.http.delete('http://localhost:8080/api/tournaments/' + id).subscribe((res) => {
+    this.http.delete(`${this.apiUrl}/tournaments/${_id}`).subscribe((res) => {
       console.log(res.json());
     });   
  
@@ -84,13 +99,13 @@ export class Dbservice {
   // Teams
   getTeams(){
  
-    if (this.data) {
-      return Promise.resolve(this.data);
-    }
+    // if (this.data) {
+    //   return Promise.resolve(this.data);
+    // }
  
     return new Promise(resolve => {
  
-      this.http.get('http://localhost:8080/api/teams')
+      this.http.get(`${this.apiUrl}/teams`)
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
@@ -104,7 +119,7 @@ export class Dbservice {
 
     return new Promise(resolve => {
  
-      this.http.get(`http://localhost:8080/api/teams/${_id}`)
+      this.http.get(`${this.apiUrl}/teams/${_id}`)
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
@@ -113,19 +128,34 @@ export class Dbservice {
     });
   } 
  
-  createTeam(team){
+  createTeam(team): Promise<any>{
  
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
  
-   return  this.http.post('http://localhost:8080/api/teams', JSON.stringify(team), {headers: headers})
+    return  new Promise((resolve, reject) => {
+      return this.http.post(`${this.apiUrl}/teams`, JSON.stringify(team), {headers: headers})
       .map(res => {
-        console.log(res.json());
-      });
- 
-  }
+        //console.log(res.json())
+        return res.json()
+      })
+         .subscribe(data => {
+           if(data.message != undefined){
+             // Error handling
+             // Get response from the server
+             this.error = data;
+             resolve(this.error);
+           }
+           this.data = data;
+           resolve(this.data);
+         });
+    })
+      .then((msg) => {
+        return msg;
+      })
+    }
 
-  updateTeam(id, newData){
+  updateTeam(_id, newData){
 
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
@@ -133,7 +163,7 @@ export class Dbservice {
 
     return new Promise(resolve => {
  
-      return this.http.post('http://localhost:8080/api/teams/' + id, JSON.stringify(newData), {headers: headers})
+      return this.http.post(`${this.apiUrl}/teams/${_id}`, JSON.stringify(newData), {headers: headers})
         .map(res => res.json())
         .subscribe(data => {
           this.data = data;
@@ -143,9 +173,9 @@ export class Dbservice {
  
   }
  
-  deleteTeam(id){
+  deleteTeam(_id){
  
-    this.http.delete('http://localhost:8080/api/teams/' + id).subscribe((res) => {
+    this.http.delete(`${this.apiUrl}/teams/${_id}`).subscribe((res) => {
       console.log(res.json());
     });   
  

@@ -10,6 +10,7 @@ export class AddTeamsPage {
   title: any;
   coach: any;
   favourite: any;
+  toolbarTitle: string = "Add Team";
  
   constructor(public viewCtrl: ViewController, public navParams: NavParams) {
  
@@ -35,5 +36,6 @@ export class AddTeamsPage {
     this.title = this.navParams.get('title');
     this.coach = this.navParams.get('coach');
     this.favourite = this.navParams.get('favourite');
+    this.toolbarTitle = this.navParams.get('toolbarTitle') || "Add Team";
   }
 }

@@ -67,3 +67,32 @@ Home -> Tournaments -> Tournament (listed teams about this tournament) -> Single
 1. Moving database from local mongoDb to mLab - https://mlab.com
 2. Moving the node.js app to separated Azure web app (deploying to Azure by Azure local git repozitory)
 - tutorial: https://github.com/Huachao/azure-content/blob/master/articles/app-service-api/app-service-api-nodejs-api-app.md
+3. How to deploy my node.js server app into Azure:
+- if we have not initialized init repo:
+ - git init 
+ - git remote add origin <link from azure>
+- if we have initialized init repo:
+ - git add .
+ - git commit --m "message"
+ - git bush azure master
+
+
+11.07.2018:
+1. Moving database from mLab to Azure Cosmos DB
+
+12.07.2018:
+1. Add selectedTeams to each Tournament
+
+13.07.2018:
+1. Mongoose validation on the server: 
+ - npm install --save mongoose-unique-validator
+ - make the title of Tournaments and Teams unique 
+ - prevent saving items and return server error (if the title isn't unique)
+2. Front-end validation: 
+ - handle the error from the server in the service (db.service.ts)
+ - send the message the service file to the correct file (e.g. teams-demo.ts) by the Promise
+ - show alert message with the correct error
+
+ TODO: 
+ - Add Loading... when it's necessary.
+ - Make Tournaments clickable with internal tournament page that shows the teams

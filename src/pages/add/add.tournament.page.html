@@ -3,7 +3,7 @@
 <!-- !!! This page is used only in the modal, so dont show it !!! -->
 <ion-header>
     <ion-toolbar transparent>
-     <ion-title>Add Tournament</ion-title>
+     <ion-title>{{toolbarTitle}}</ion-title>
      <ion-buttons end>
        <button ion-button icon-only (click)="close()"><ion-icon name="close"></ion-icon></button>
      </ion-buttons>
@@ -22,12 +22,26 @@
          <ion-textarea [(ngModel)]="description" name="description"></ion-textarea>
        </ion-item>
     
-       <ion-item>
+       <!-- <ion-item>
          <ion-range min="0" max="100" pin="true" [(ngModel)]="rating">
            <ion-icon range-left name="sad"></ion-icon>
            <ion-icon range-right name="happy"></ion-icon>
          </ion-range>
-       </ion-item>
+       </ion-item> -->
+
+       <ion-item>
+          <ion-label>Select Teams</ion-label>
+          <ion-select (ngModelChange)="getSelectedTeams(selectedTeams)" [(ngModel)]="selectedTeams" multiple="true">
+            <ion-option 
+              *ngFor="let team of teams" 
+              value="{{team.title}}" 
+              selected = "{team.selected}"
+              [id]="team._id"
+              (ionSelect)="selectTeams(team)">
+                        {{team.title}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
     
      </ion-list>
     
