@@ -96,3 +96,9 @@ Home -> Tournaments -> Tournament (listed teams about this tournament) -> Single
  TODO: 
  - Add Loading... when it's necessary.
  - Make Tournaments clickable with internal tournament page that shows the teams
+
+ 16.07.2018:
+ 1. Adding confirm alert when delete item
+ 2. Adding Loading... messages
+ 3. Adding Front-End validation when register a new user and login/Logout
+  - including email validation, password length, error form messages and Toast notifications

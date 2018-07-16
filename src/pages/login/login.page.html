@@ -8,32 +8,38 @@
     </ion-header>
      
     <ion-content>
-     
+     <form [formGroup]="loginForm">
         <ion-row class="login-form">
             <ion-col>
                 <ion-list inset>
      
                   <ion-item>
                     <ion-label><ion-icon name="person"></ion-icon></ion-label>
-                    <ion-input [(ngModel)]="email" placeholder="email" type="text"></ion-input>
+                    <ion-input formControlName="email" [(ngModel)]="email" placeholder="email" type="text"></ion-input>
                   </ion-item>
+                  <ion-item *ngIf="!loginForm.controls.email.valid  && (loginForm.controls.password.dirty || submitAttempt)">
+                        <p>Please enter a valid email.</p>
+                    </ion-item>
      
                   <ion-item>
                     <ion-label><ion-icon name="lock"></ion-icon></ion-label>
-                    <ion-input [(ngModel)]="password" placeholder="password" type="password"></ion-input>
+                    <ion-input formControlName="password" [(ngModel)]="password" placeholder="password" type="password"></ion-input>
                   </ion-item>
+                  <ion-item *ngIf="!loginForm.controls.password.valid  && (loginForm.controls.password.dirty || submitAttempt)">
+                        <p>The password must be minimum 6 symbols.</p>
+                    </ion-item>
      
                 </ion-list>
      
-                <button ion-button full (click)="login()" color="primary" class="login-button">Login</button>
+                <button ion-button full [disabled]="!loginForm.valid"  (click)="login()" color="primary" class="login-button">Login</button>
      
             </ion-col>
         </ion-row>
-     
+    
         <ion-row>
             <ion-col>
                 <button ion-button (click)="launchSignup()" class="create-account">Create an Account</button>
             </ion-col>
         </ion-row>
-     
+    </form>
     </ion-content>

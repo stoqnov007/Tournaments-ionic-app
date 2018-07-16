@@ -14,3 +14,18 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+// custom Ionic toast notification
+
+
+.toast-md .toast-wrapper {
+    left: auto;
+    right: 20px;
+    border-radius: 3px;
+    background: #32db64;
+    display: inline-block;
+    width: auto;
+}
+.toast-md .toast-wrapper.toast-top {
+    top: 65px;
+}

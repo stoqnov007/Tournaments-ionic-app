@@ -1,6 +1,6 @@
 import { Response, Headers } from '@angular/http';
-import { Component, ViewChild} from '@angular/core';
-import { Nav, Platform, NavParams, NavController, MenuController } from 'ionic-angular';
+import { Component, ViewChild, } from '@angular/core';
+import { Nav, Platform, NavParams, NavController, MenuController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -26,6 +26,7 @@ export class MyApp {
       public auth: Auth, 
       public statusBar: StatusBar,
       public menuCtrl: MenuController, 
+      private toastCtrl: ToastController,
       public splashScreen: SplashScreen) {
       this.initializeApp();
       
@@ -76,6 +77,16 @@ export class MyApp {
     this.auth.logout();
     this.user = false;
     this.menuCtrl.enable(false, 'authenticated');
-    this.menuCtrl.enable(true, 'unauthenticated')
+    this.menuCtrl.enable(true, 'unauthenticated');
+    this.presentToast();
+  }
+
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: 'Logged out successfully',
+      duration: 4000,
+      position: 'top'
+    });
+    toast.present();
   }
 }

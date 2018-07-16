@@ -8,6 +8,7 @@ import { SignupPage } from './../pages/signup/signup.page';
 import { Dbservice } from './shared/db.service';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -41,6 +42,8 @@ import { Auth } from './shared/auth';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     IonicModule.forRoot(MyApp),
      AgmCoreModule.forRoot({ apiKey: 'AIzaSyBbsOlMryAHu2ESwHHSwrDBIUU7fiENNoM'}),
      IonicStorageModule.forRoot(),

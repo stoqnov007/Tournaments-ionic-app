@@ -1,7 +1,7 @@
 import { MyTeamPage } from './../myTeams/my-teams.page';
 import { Dbservice } from '../../app/shared/db.service';
 import { Component } from "@angular/core";
-import { NavController, ModalController, AlertController  } from 'ionic-angular';
+import { NavController, ModalController, AlertController, LoadingController  } from 'ionic-angular';
 import { AddTeamsPage } from '../add/add-teams-page';
  
 @Component({
@@ -20,16 +20,24 @@ export class TeamsDemo {
   constructor(public nav: NavController, 
               public teamService: Dbservice,
               private alertCtrl: AlertController, 
+              private _loadingController: LoadingController,
               public modalCtrl: ModalController) {
  
   }
  
   ionViewDidLoad(){
- 
-    this.teamService.getTeams().then((data) => {
-      //console.log(data);
-      this.teams = data;
-    });
+
+    let loader = this._loadingController.create({
+      content: 'Loading...'
+    })
+
+    loader.present().then(() =>{
+      this.teamService.getTeams().then((data) => {
+        //console.log(data);
+        this.teams = data;
+        loader.dismiss();
+      });
+    })
  
   }
 
@@ -48,30 +56,59 @@ export class TeamsDemo {
     });
     alert.present();
   }
+
+  presentConfirm(team) {
+    let alert = this.alertCtrl.create({
+      title: 'Confirm delete',
+      message: 'Do you want to delete this item?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.deleteTeam(team)
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
  
   addTeam(){
- 
+    
+    let loader = this._loadingController.create({
+      content: 'Adding...'
+    })
+
     let modal = this.modalCtrl.create(AddTeamsPage, {});
     modal.onDidDismiss(team => {
       if(team){
-
-        this.teamService.createTeam(team).then((data) => {
-          // Error handling
-          if(data.errors) {
-            this.error = data.errors.title.message;
-            // Show Alert with error message
-            this.presentAlert("Error", this.error);
-          }
-          else{
-            this.teams.push(team);
-          }
-        }).then((msg) => {
-          //console.log("The msg 2 is: " + msg)
-            this.teamService.getTeams().then((data) => {
-                //console.log(data);
-                this.teams = data;
-              })
-        });      
+        loader.present().then(() =>{
+          this.teamService.createTeam(team).then((data) => {
+            // Error handling
+            if(data.errors) {
+              this.error = data.errors.title.message;
+              // Show Alert with error message
+              this.presentAlert("Error", this.error);
+            }
+            else{
+              this.teams.push(team);
+            }
+          }).then((msg) => {
+            //console.log("The msg 2 is: " + msg)
+              this.teamService.getTeams().then((data) => {
+                  //console.log(data);
+                  this.teams = data;
+                  loader.dismiss();
+                })
+          });
+        });
       }
     });
     modal.present();
@@ -90,14 +127,19 @@ export class TeamsDemo {
   }
 
   editTeam(id, newData) {
+    let loader = this._loadingController.create({
+      content: 'Editing...'
+    })
 
     let modal = this.modalCtrl.create(AddTeamsPage, newData);
-    //console.log(newData)
     modal.onDidDismiss(team => {
       if(team){
-        this.teamService.updateTeam(id, team).then((data) => {
-            this.teams = data;
-        });  
+        loader.present().then(() =>{
+          this.teamService.updateTeam(id, team).then((data) => {
+              this.teams = data;
+              loader.dismiss();
+          });
+        });
       }
     });
     modal.present();

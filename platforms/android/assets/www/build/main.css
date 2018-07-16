@@ -24982,3 +24982,16 @@ ion-navbar.toolbar {
     padding-top: calc(16px + 20px);
   }
 }
+
+.toast-md .toast-wrapper {
+  left: auto;
+  right: 20px;
+  border-radius: 3px;
+  background: #32db64;
+  display: inline-block;
+  width: auto;
+}
+
+.toast-md .toast-wrapper.toast-top {
+  top: 65px;
+}

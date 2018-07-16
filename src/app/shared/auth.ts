@@ -7,7 +7,6 @@ import 'rxjs/add/operator/map';
 export class Auth {
  
   public token: any;
- 
   constructor(public http: Http, public storage: Storage) {}
  
   checkAuthentication(){
@@ -58,16 +57,16 @@ export class Auth {
  
   }
  
-  login(credentials){
+  login(credentials): Promise<any>{
  
     return new Promise((resolve, reject) => {
  
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
  
-        this.http.post('https://tournamentsapi.azurewebsites.net/api/login', JSON.stringify(credentials), {headers: headers})
+        return this.http.post('https://tournamentsapi.azurewebsites.net/api/login', JSON.stringify(credentials), {headers: headers})
           .subscribe(res => {
- 
+            //console.log(res.status);
             let data = res.json();
             this.token = data.token;
             this.storage.set('token', data.token);
@@ -77,7 +76,10 @@ export class Auth {
           }, (err) => {
             reject(err);
           });
-    });
+    })
+      .then((msg) => {
+        return msg;
+      });
  
   }
  
