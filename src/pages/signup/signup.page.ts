@@ -36,7 +36,7 @@ export class SignupPage {
 
   presentToast() {
     let toast = this.toastCtrl.create({
-      message: 'Your account was created successfully. Welcome to the Tournaments!',
+      message: 'Your account has been created successfully. Welcome to the Tournaments!',
       duration: 5000,
       position: 'top'
     });

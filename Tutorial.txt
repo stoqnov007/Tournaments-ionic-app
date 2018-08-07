@@ -93,12 +93,27 @@ Home -> Tournaments -> Tournament (listed teams about this tournament) -> Single
  - send the message the service file to the correct file (e.g. teams-demo.ts) by the Promise
  - show alert message with the correct error
 
- TODO: 
- - Add Loading... when it's necessary.
- - Make Tournaments clickable with internal tournament page that shows the teams
-
  16.07.2018:
  1. Adding confirm alert when delete item
  2. Adding Loading... messages
  3. Adding Front-End validation when register a new user and login/Logout
   - including email validation, password length, error form messages and Toast notifications
+
+ 17.07.2018: 
+ 1. Adding tournamentTeamsDemo (Make Tournaments clickable with internal tournament page that shows the teams) 
+ 2. Adding TeamDetailDemo 
+ 3. TODO: 
+
+- League: Title, Icon, Owner, Co-owner, type(public, private), sport(result type: 1 x 2 or 1 2)
+- Player: (follow) Fb or Google login, avatar, name, age
+- Game: date, place, players, result 
+
+- Challenge some player when create a new game or event.
+
+ - Add team to favourites.
+ - Add admin games page, where a new games can be added.
+ - CRUD games
+ - Display all games per team in the TeamDetailDemo page.
+
+ - CRUD player
+ - CRUD players to each team

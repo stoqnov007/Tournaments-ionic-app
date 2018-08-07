@@ -185,6 +185,24 @@ var Team = mongoose.model('teams', teamSchema);
         });
     });
 
+    // Get tournament Teams
+    app.get('/api/tournamentTeams', function(req, res) {
+ 
+        console.log("fetching Tournament teams");
+ 
+        // use mongoose to get all Teams in the database
+        Team.find({
+            $set: {title: req.params.selectedTeams}
+        }, function(err, tournaments) {
+ 
+            // if there is an error retrieving, send the error. nothing after res.send(err) will execute
+            if (err)
+                res.send(err)
+ 
+            res.json(tournaments); // return all tournaments in JSON format
+        });
+    });
+
     // get team by id
     app.get('/api/teams/:team_id', function(req, res) {
         Team.find({

@@ -97,7 +97,7 @@ export class Dbservice {
   }
 
   // Teams
-  getTeams(){
+  getTeams(): Promise<any>{
  
     // if (this.data) {
     //   return Promise.resolve(this.data);
@@ -113,6 +113,18 @@ export class Dbservice {
         });
     });
  
+  }
+
+  getTournamentTeams() : Promise<any> {
+    return new Promise(resolve => {
+ 
+      this.http.get(`${this.apiUrl}/teams`)
+        .map(res => res.json())
+        .subscribe(data => {
+          this.data = data;
+          resolve(this.data);
+        });
+    })
   }
 
   getTeamById(_id) {

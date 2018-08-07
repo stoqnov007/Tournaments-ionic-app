@@ -1,0 +1,43 @@
+<ion-header>
+        <ion-navbar color="danger">
+            <ion-title>Teams</ion-title>
+        </ion-navbar>
+      
+      </ion-header>
+          
+         <ion-content>
+          
+           <ion-list no-lines>
+             <ion-item-sliding *ngFor="let team of tournamentTeams">
+          
+               <ion-item>
+          
+                 <!-- <ion-avatar item-left>
+                   <img src="https://api.adorable.io/avatars/75/{{tournament.title}}">
+                 </ion-avatar> -->
+                 <button ion-item (click)="goToTeam($event,team)">
+                    {{team.title}}
+                </button>
+                 <!-- <h2>{{tournament.title}}</h2> -->
+                 <!-- <p>{{tournament.description}}</p> -->
+          
+                 <!-- <ion-icon *ngIf="tournament.rating < 50" danger name="sad"></ion-icon>
+                 <ion-icon *ngIf="tournament.rating >= 50" secondary name="happy"></ion-icon>
+                 {{tournament.rating}} -->
+          
+               </ion-item>
+          
+               <!-- <ion-item>
+                 <button ion-button color="danger" (click)="presentConfirm(tournament)">
+                   <ion-icon name="trash"></ion-icon>
+                   Delete
+                 </button>
+                 <button ion-button color="secondary" (click)="getTournamentById(tournament)">
+                  Edit
+                </button>
+               </ion-item> -->
+             </ion-item-sliding>
+          
+           </ion-list>
+          
+         </ion-content>

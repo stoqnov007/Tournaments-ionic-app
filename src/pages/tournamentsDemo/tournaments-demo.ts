@@ -2,7 +2,7 @@ import { Dbservice } from '../../app/shared/db.service';
 import { Component } from "@angular/core";
 import { NavController, ModalController, LoadingController, AlertController } from 'ionic-angular';
 import { AddTournamentPage } from '../add/add-tournament-page';
-import { EditTournamentPage } from '../edit/edit-tournament-page';
+import { TournamentTeams } from '../tournamentTeamsDemo/tournamentTeams';
  
 @Component({
   selector: 'tournaments-demo',
@@ -157,6 +157,10 @@ export class TournamentDemo {
  
     //Remove from database
     this.tournamentService.deleteTournament(tournament._id);
+  }
+
+  goToTournament($event, tournament) {
+    this.nav.push(TournamentTeams, {tournament: tournament});
   }
  
 }

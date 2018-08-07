@@ -18,8 +18,10 @@
            <ion-avatar item-left>
              <img src="https://api.adorable.io/avatars/75/{{tournament.title}}">
            </ion-avatar>
-    
-           <h2>{{tournament.title}}</h2>
+           <button ion-item (click)="goToTournament($event,tournament)">
+              {{tournament.title}}
+          </button>
+           <!-- <h2>{{tournament.title}}</h2> -->
            <p>{{tournament.description}}</p>
     
            <!-- <ion-icon *ngIf="tournament.rating < 50" danger name="sad"></ion-icon>
